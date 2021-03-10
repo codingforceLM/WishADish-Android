@@ -12,4 +12,10 @@
     <string name="morgens">Morgens</string>
     <string name="mittags">Mittags</string>
     <string name="abends">Abends</string>
+    <string name="best_tigen">Bestätigen</string>
+    <string name="zeit">Zeit</string>
+    <string name="gruppe">Gruppe</string>
+    <string name="Morgens">Morgens</string>
+    <string name="Mittags">Mittags</string>
+    <string name="Abends">Abends</string>
 </resources>
