@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WishADish</string>
+    <string name="offene_einkaufslisten">Offene EInkaufslisten</string>
+    <string name="gerichte_heute">Gerichte Heute</string>
+    <string name="landing">Startseite</string>
+    <string name="startseite">Startseite</string>
+    <string name="kalender">Kalender</string>
+    <string name="einkaufslisten">Einkaufslisten</string>
+    <string name="gerichte">Gerichte</string>
+    <string name="zutaten">Zutaten</string>
+    <string name="gruppen">Gruppen</string>
+    <string name="morgens">Morgens</string>
+    <string name="mittags">Mittags</string>
+    <string name="abends">Abends</string>
+</resources>

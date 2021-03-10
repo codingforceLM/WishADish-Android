@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_landing_page"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/startseite" />
+        <item
+            android:id="@+id/nav_calender"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/kalender" />
+        <item
+            android:id="@+id/nav_shoppinglist"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/einkaufslisten" />
+        <item
+            android:id="@+id/nav_dishes"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/gerichte" />
+        <item
+            android:id="@+id/nav_ingredients"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/zutaten" />
+        <item
+            android:id="@+id/nav_groups"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/gruppen" />
+    </group>
+
+</menu>
