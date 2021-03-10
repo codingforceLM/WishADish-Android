@@ -48,24 +48,24 @@
         android:layout_height="match_parent">
 
         <RadioButton
-            android:id="@+id/morning"
+            android:id="@+id/radio_morning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:duplicateParentState="false"
             android:text="morgens"
-            android:checked="true"/>
+            android:checked="true" />
 
         <RadioButton
-            android:id="@+id/day"
+            android:id="@+id/radio_day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Mittags"/>
+            android:text="@string/Mittags" />
 
         <RadioButton
-            android:id="@+id/evening"
+            android:id="@+id/radio_evening"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Abends"/>
+            android:text="@string/Abends" />
     </RadioGroup>
 
     <Button

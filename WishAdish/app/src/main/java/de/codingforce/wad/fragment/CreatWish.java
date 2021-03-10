@@ -74,8 +74,9 @@ public class CreatWish extends NameAwareFragment{
             Log.e(LOG_TAG,groups[posi]);
             //dish
             int posi2 = spinner_dish.getSelectedItemPosition();
-            Log.e(LOG_TAG,groups[posi2]);
+            Log.e(LOG_TAG,dishes[posi2]);
 
+            //Todo : richtige Id bekommen
             //time
             int radioId = radioGroup.getCheckedRadioButtonId();
             radioButton = v.findViewById(radioId);
