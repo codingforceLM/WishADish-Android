@@ -11,6 +11,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+
 import de.codeingforce.wad.R;
 
 public class CreatWish extends NameAwareFragment{
@@ -24,9 +26,13 @@ public class CreatWish extends NameAwareFragment{
     private RadioGroup radioGroup;
     private RadioButton radioButton;
 
+    private ArrayList<String> groups;
+    private ArrayList<String> dishes;
 
-    private String[] groups = {"Group A", "Group B", "Group C"};
-    private String[] dishes = {"Dish A", "Dish B", "Dish C"};
+    private String group;
+    private String dish;
+    private String time;
+    private String wish;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -37,6 +43,18 @@ public class CreatWish extends NameAwareFragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Log.e(LOG_TAG, "--onViewCreated--");
+
+        groups = new ArrayList<>();
+        groups.add("Group A");
+        groups.add("Group B");
+        groups.add("Group C");
+        groups.add("Group D");
+
+        dishes = new ArrayList<>();
+        dishes.add("Dish A");
+        dishes.add("Dish B");
+        dishes.add("Dish C");
+
 
         //Spinner for Group
         spinner_group = view.findViewById(R.id.spinner_group);
@@ -71,16 +89,26 @@ public class CreatWish extends NameAwareFragment{
             Log.e(LOG_TAG, "--Button Clicked--");
             //groups
             int posi = spinner_group.getSelectedItemPosition();
-            Log.e(LOG_TAG,groups[posi]);
+            group = groups.get((posi));
             //dish
             int posi2 = spinner_dish.getSelectedItemPosition();
-            Log.e(LOG_TAG,dishes[posi2]);
+            dish = dishes.get(posi2);
 
-            //Todo : richtige Id bekommen
             //time
-            int radioId = radioGroup.getCheckedRadioButtonId();
-            radioButton = v.findViewById(radioId);
-            Log.e(LOG_TAG, String.valueOf(radioId));
+            switch (radioGroup.getCheckedRadioButtonId()) {
+                case R.id.radio_morning :
+                    time = "morgens";
+                    break;
+                case R.id.radio_day :
+                    time = "mittags";
+                    break;
+                case R.id.radio_evening:
+                    time = "abends";
+                    break;
+
+            }
+            wish = "Gruppe :"+ group + "\tGericht :"+ dish + "\tZeit:" +time;
+            Log.e(LOG_TAG, wish);
         }
     }
 }
