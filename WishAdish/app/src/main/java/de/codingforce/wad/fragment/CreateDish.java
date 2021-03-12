@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,8 @@ public class CreateDish extends NameAwareFragment {
     private Spinner spinner_unit;
     private ArrayAdapter adapter_unit;
     private EditText amount;
+    private FloatingActionButton more_ing;
+    private LinearLayout layout_list;
 
     private ArrayList<String> ingredients;
     private ArrayList<String> units;
@@ -38,6 +43,10 @@ public class CreateDish extends NameAwareFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
+
+        //add Layout
+        layout_list= view.findViewById(R.id.layout_list);
+
 
         //dish name
         dish_name = view.findViewById(R.id.dish_name_plainText);
@@ -71,7 +80,10 @@ public class CreateDish extends NameAwareFragment {
         //amount
         amount = view.findViewById(R.id.amount_plainText);
 
+        //Action Button
+        more_ing = view.findViewById(R.id.more_ingredients);
 
+        more_ing.setOnClickListener(new ActionButtonListener());
 
         //creat Button
         button = view.findViewById(R.id.button2);
@@ -100,5 +112,54 @@ public class CreateDish extends NameAwareFragment {
 
 
         }
+    }
+
+    private class ActionButtonListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Log.e(LOG_TAG, "--ActionButton Clicked--");
+            addView();
+        }
+    }
+
+    private void addView()
+    {
+        Log.e(LOG_TAG, "--addView--");
+        final View testView = getLayoutInflater().inflate(R.layout.dynamics_ingredients,null,false);
+
+
+        EditText test2 = testView.findViewById(R.id.test2);
+        Spinner test1 = testView.findViewById(R.id.test1);
+        Spinner test3 = testView.findViewById(R.id.test3);
+
+        FloatingActionButton deleteButton = testView.findViewById(R.id.delete_button);
+
+        ArrayAdapter adapter_1;
+        ArrayAdapter adapter_3;
+
+        adapter_1 = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, ingredients);
+        adapter_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        test1.setAdapter(adapter_1);
+
+        adapter_3 = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, units);
+        adapter_3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        test3.setAdapter(adapter_3);
+
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeView(testView);
+            }
+        });
+
+        layout_list.addView(testView);
+    }
+
+    private void removeView(View view)
+    {
+        layout_list.removeView(view);
     }
 }
