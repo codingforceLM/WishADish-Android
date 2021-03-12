@@ -27,6 +27,7 @@ public class Calendar extends NameAwareFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
 
         calendarView = view.findViewById(R.id.calendarView2);
@@ -38,7 +39,7 @@ public class Calendar extends NameAwareFragment {
                                             int dayOfMonth) {
                 curDate = String.valueOf(dayOfMonth);
                 Year = String.valueOf(year);
-                Month = String.valueOf(month);
+                Month = String.valueOf(month + 1);
                 Log.e(LOG_TAG, "date : " +Year+"/"+Month+"/"+curDate);
             }
         });

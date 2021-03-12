@@ -18,4 +18,5 @@
     <string name="Morgens">Morgens</string>
     <string name="Mittags">Mittags</string>
     <string name="Abends">Abends</string>
+    <string name="titel">Titel:</string>
 </resources>

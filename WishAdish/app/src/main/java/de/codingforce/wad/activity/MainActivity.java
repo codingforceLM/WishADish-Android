@@ -22,6 +22,7 @@ import java.util.List;
 import de.codeingforce.wad.R;
 import de.codingforce.wad.fragment.Calendar;
 import de.codingforce.wad.fragment.CreatWish;
+import de.codingforce.wad.fragment.CreateDish;
 import de.codingforce.wad.fragment.Dishes;
 import de.codingforce.wad.fragment.Groups;
 import de.codingforce.wad.fragment.NameAwareFragment;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         //Startseite
-        Class Landing_Page = CreatWish.class;
+        Class Landing_Page = CreateDish.class;
         placeFragment(Landing_Page, R.id.mainFrame);
 
     }
