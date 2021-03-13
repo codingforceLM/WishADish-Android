@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -45,12 +46,14 @@ public class CreatWish extends NameAwareFragment{
         Log.e(LOG_TAG, "--onViewCreated--");
 
         groups = new ArrayList<>();
+        groups.add("Gruppe auswählen");
         groups.add("Group A");
         groups.add("Group B");
         groups.add("Group C");
         groups.add("Group D");
 
         dishes = new ArrayList<>();
+        dishes.add("Gericht auswählen");
         dishes.add("Dish A");
         dishes.add("Dish B");
         dishes.add("Dish C");
@@ -89,26 +92,35 @@ public class CreatWish extends NameAwareFragment{
             Log.e(LOG_TAG, "--Button Clicked--");
             //groups
             int posi = spinner_group.getSelectedItemPosition();
-            group = groups.get((posi));
-            //dish
             int posi2 = spinner_dish.getSelectedItemPosition();
-            dish = dishes.get(posi2);
+            if(posi == 0)
+            {
+                Toast toast = Toast.makeText(v.getContext(), "Bitte eine Gruppe auswählen", Toast.LENGTH_SHORT);
+                toast.show();
+            }else if (posi2 == 0) {
+                Toast toast = Toast.makeText(v.getContext(), "Bitte ein Gericht auswählen", Toast.LENGTH_SHORT);
+                toast.show();
+            }else {
+                group = groups.get((posi));
 
-            //time
-            switch (radioGroup.getCheckedRadioButtonId()) {
-                case R.id.radio_morning :
-                    time = "morgens";
-                    break;
-                case R.id.radio_day :
-                    time = "mittags";
-                    break;
-                case R.id.radio_evening:
-                    time = "abends";
-                    break;
+                dish = dishes.get(posi2);
 
+                //time
+                switch (radioGroup.getCheckedRadioButtonId()) {
+                    case R.id.radio_morning:
+                        time = "morgens";
+                        break;
+                    case R.id.radio_day:
+                        time = "mittags";
+                        break;
+                    case R.id.radio_evening:
+                        time = "abends";
+                        break;
+
+                }
+                wish = "Gruppe :" + group + "\tGericht :" + dish + "\tZeit:" + time;
+                Log.e(LOG_TAG, wish);
             }
-            wish = "Gruppe :"+ group + "\tGericht :"+ dish + "\tZeit:" +time;
-            Log.e(LOG_TAG, wish);
         }
     }
 }

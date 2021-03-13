@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         //Startseite
-        Class Landing_Page = CreateDish.class;
+        Class Landing_Page = CreatWish.class;
         placeFragment(Landing_Page, R.id.mainFrame);
 
     }
