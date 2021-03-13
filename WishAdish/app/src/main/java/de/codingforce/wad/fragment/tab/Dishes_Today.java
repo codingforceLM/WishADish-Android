@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import de.codeingforce.wad.R;
 import de.codingforce.wad.fragment.NameAwareFragment;
 import de.codingforce.wad.fragment.adapter.RecylerAdapter;
-import de.codingforce.wad.item.item_layout;
+import de.codingforce.wad.item.Item_layout;
 
 public class Dishes_Today extends NameAwareFragment {
 
@@ -32,7 +32,7 @@ public class Dishes_Today extends NameAwareFragment {
     private RecyclerView.Adapter mAdapter_evening;
     private RecyclerView.LayoutManager mLayoutManager_evening;
 
-    ArrayList<item_layout> list = new ArrayList<>();
+    ArrayList<Item_layout> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -44,10 +44,10 @@ public class Dishes_Today extends NameAwareFragment {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
 
-        list.add(new item_layout("Test","Best"));
-        list.add(new item_layout("Test2","Best2"));
-        list.add(new item_layout("Test3","Best3"));
-        list.add(new item_layout("Test4","Best4"));
+        list.add(new Item_layout("Test","Best"));
+        list.add(new Item_layout("Test2","Best2"));
+        list.add(new Item_layout("Test3","Best3"));
+        list.add(new Item_layout("Test4","Best4"));
 
         //Set up morning Recycler
         mRecyclerView_morning = view.findViewById(R.id.recycler_morning);

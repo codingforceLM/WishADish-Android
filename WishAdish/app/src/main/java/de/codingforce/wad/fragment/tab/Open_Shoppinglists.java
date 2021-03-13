@@ -2,9 +2,7 @@ package de.codingforce.wad.fragment.tab;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import de.codeingforce.wad.R;
 import de.codingforce.wad.fragment.NameAwareFragment;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterOnClick;
-import de.codingforce.wad.item.item_layout;
+import de.codingforce.wad.item.Item_layout;
 
 public class Open_Shoppinglists extends NameAwareFragment {
     private RecyclerView mRecyclerView;
@@ -25,7 +23,7 @@ public class Open_Shoppinglists extends NameAwareFragment {
 
     private static final String LOG_TAG = "Open_Shoppinglists";
 
-    ArrayList<item_layout> list = new ArrayList<>();
+    ArrayList<Item_layout> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -38,18 +36,18 @@ public class Open_Shoppinglists extends NameAwareFragment {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
 
-        list.add(new item_layout("Test","Best"));
-        list.add(new item_layout("Test2","Best2"));
-        list.add(new item_layout("Test3","Best3"));
-        list.add(new item_layout("Test4","Best4"));
-        list.add(new item_layout("Test","Best"));
-        list.add(new item_layout("Test2","Best2"));
-        list.add(new item_layout("Test3","Best3"));
-        list.add(new item_layout("Test4","Best4"));
-        list.add(new item_layout("Test","Best"));
-        list.add(new item_layout("Test2","Best2"));
-        list.add(new item_layout("Test3","Best3"));
-        list.add(new item_layout("Test4","Best4"));
+        list.add(new Item_layout("Test","Best"));
+        list.add(new Item_layout("Test2","Best2"));
+        list.add(new Item_layout("Test3","Best3"));
+        list.add(new Item_layout("Test4","Best4"));
+        list.add(new Item_layout("Test","Best"));
+        list.add(new Item_layout("Test2","Best2"));
+        list.add(new Item_layout("Test3","Best3"));
+        list.add(new Item_layout("Test4","Best4"));
+        list.add(new Item_layout("Test","Best"));
+        list.add(new Item_layout("Test2","Best2"));
+        list.add(new Item_layout("Test3","Best3"));
+        list.add(new Item_layout("Test4","Best4"));
 
         //Set up morning Recycler
         mRecyclerView = view.findViewById(R.id.open_shoppinglists);

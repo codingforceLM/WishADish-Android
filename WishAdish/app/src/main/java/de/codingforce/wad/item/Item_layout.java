@@ -1,10 +1,10 @@
 package de.codingforce.wad.item;
 
-public class item_layout {
+public class Item_layout {
     private String mText1;
     private String mText2;
 
-    public item_layout(String text1, String text2)
+    public Item_layout(String text1, String text2)
     {
         mText1 = text1;
         mText2 = text2;

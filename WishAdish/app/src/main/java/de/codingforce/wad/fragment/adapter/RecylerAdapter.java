@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import de.codeingforce.wad.R;
-import de.codingforce.wad.item.item_layout;
+import de.codingforce.wad.item.Item_layout;
 
 public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.RecylerViewHolder> {
-    private ArrayList<item_layout> mlist;
+    private ArrayList<Item_layout> mlist;
 
     public static class RecylerViewHolder extends RecyclerView.ViewHolder
     {
@@ -30,7 +30,7 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.RecylerV
         }
     }
 
-    public RecylerAdapter(ArrayList<item_layout> list)
+    public RecylerAdapter(ArrayList<Item_layout> list)
     {
         mlist = list;
     }
@@ -47,7 +47,7 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.RecylerV
 
     @Override
     public void onBindViewHolder(@NonNull RecylerViewHolder holder, int position) {
-        item_layout currentItemlayout = mlist.get(position);
+        Item_layout currentItemlayout = mlist.get(position);
 
         holder.mTextView1.setText(currentItemlayout.getmText1());
         holder.mTextView2.setText(currentItemlayout.getmText2());

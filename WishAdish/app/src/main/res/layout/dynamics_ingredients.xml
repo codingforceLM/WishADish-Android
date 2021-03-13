@@ -5,13 +5,13 @@
     android:layout_height="match_parent">
 
     <Spinner
-        android:id="@+id/test1"
-        android:layout_width="wrap_content"
+        android:id="@+id/spinner_ingr"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <EditText
-        android:id="@+id/test2"
+        android:id="@+id/text_amount"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="25dp"
@@ -20,8 +20,8 @@
         android:inputType="textPersonName" />
 
     <Spinner
-        android:id="@+id/test3"
-        android:layout_width="wrap_content"
+        android:id="@+id/spinner_unit"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 

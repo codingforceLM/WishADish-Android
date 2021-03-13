@@ -220,4 +220,9 @@ public class MainActivity extends AppCompatActivity {
         // Close the navigation drawer
         mDrawer.closeDrawers();
     }
+
+    public void changeTitel(String titel)
+    {
+        setTitle(titel);
+    }
 }

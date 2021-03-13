@@ -34,64 +34,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/ingredients_list"
+                <TextView
+                    android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:text="Zutatenliste :    " />
 
-                    <TextView
-                        android:id="@+id/textView14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Zutatenliste :    " />
-
-                    <Spinner
-                        android:id="@+id/ingredients_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textView15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:text="Menge :          " />
 
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Menge :          " />
-
-                    <EditText
-                        android:id="@+id/amount_plainText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:ems="10"
-                        android:inputType="textPersonName" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/unit_list"
+                <TextView
+                    android:id="@+id/textView16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Einheit:                        " />
-
-                    <Spinner
-                        android:id="@+id/unit_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
+                    android:text="Einheit:                        " />
 
             </LinearLayout>
 

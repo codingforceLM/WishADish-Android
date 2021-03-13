@@ -10,28 +10,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.codeingforce.wad.R;
+import de.codingforce.wad.item.Item_ingredients;
 
 public class CreateDish extends NameAwareFragment {
     private static final String LOG_TAG = "CreatDishes";
 
     private EditText dish_name;
     private Button button;
-    private Spinner spinner_ingredients;
-    private ArrayAdapter adapter_ingredients;
-    private Spinner spinner_unit;
-    private ArrayAdapter adapter_unit;
-    private EditText amount;
     private FloatingActionButton more_ing;
     private LinearLayout layout_list;
 
+    //lists for spinner
     private ArrayList<String> ingredients;
     private ArrayList<String> units;
+
+    //Ingredientslist
+    private ArrayList<Item_ingredients> ingredients_list = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -53,32 +57,17 @@ public class CreateDish extends NameAwareFragment {
 
         //get Data
         ingredients = new ArrayList<>();
+        ingredients.add("Zutat auswählen");
         ingredients.add("ing A");
         ingredients.add("ing B");
         ingredients.add("ing C");
         ingredients.add("ing D");
 
         units = new ArrayList<>();
+        units.add("Einheit auswählen");
         units.add("kg");
         units.add("l");
         units.add("stück");
-
-        //spinner ingredients
-        spinner_ingredients = view.findViewById(R.id.ingredients_spinner);
-        adapter_ingredients = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, ingredients);
-        adapter_ingredients.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner_ingredients.setAdapter(adapter_ingredients);
-
-        //spinner unit
-        spinner_unit = view.findViewById(R.id.unit_spinner);
-        adapter_unit = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, units);
-        adapter_unit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner_unit.setAdapter(adapter_unit);
-
-        //amount
-        amount = view.findViewById(R.id.amount_plainText);
 
         //Action Button
         more_ing = view.findViewById(R.id.more_ingredients);
@@ -95,22 +84,17 @@ public class CreateDish extends NameAwareFragment {
         @Override
         public void onClick(View v) {
             Log.e(LOG_TAG, "--Button Clicked--");
-            //get Name
-            Log.e(LOG_TAG, dish_name.getText().toString());
-            //get spinner values
 
-            //ingredients
-            int posi = spinner_ingredients.getSelectedItemPosition();
-            Log.e(LOG_TAG, ingredients.get(posi));
+            if(checkIfValidAndRead())
+            {
+                //get Name
+                Log.e(LOG_TAG, dish_name.getText().toString());
 
-            //get amount
-            Log.e(LOG_TAG, amount.getText().toString());
-
-            //unit
-            int posi2 = spinner_unit.getSelectedItemPosition();
-            Log.e(LOG_TAG, units.get(posi2));
-
-
+                for(Item_ingredients i : ingredients_list)
+                {
+                    Log.e(LOG_TAG, "Ingredients :" + i.getIngredient() + "Amount :"+ i.getAmount() +"Unit :" + i.getUnit());
+                }
+            }
         }
     }
 
@@ -125,41 +109,117 @@ public class CreateDish extends NameAwareFragment {
     private void addView()
     {
         Log.e(LOG_TAG, "--addView--");
-        final View testView = getLayoutInflater().inflate(R.layout.dynamics_ingredients,null,false);
+        final View ingredientsView = getLayoutInflater().inflate(R.layout.dynamics_ingredients,null,false);
 
 
-        EditText test2 = testView.findViewById(R.id.test2);
-        Spinner test1 = testView.findViewById(R.id.test1);
-        Spinner test3 = testView.findViewById(R.id.test3);
+        EditText amount = ingredientsView.findViewById(R.id.text_amount);
+        Spinner spinnerIngr = ingredientsView.findViewById(R.id.spinner_ingr);
+        Spinner spinnerUnit = ingredientsView.findViewById(R.id.spinner_unit);
+        ArrayAdapter adapter_ingr;
+        ArrayAdapter adapter_unit;
 
-        FloatingActionButton deleteButton = testView.findViewById(R.id.delete_button);
 
-        ArrayAdapter adapter_1;
-        ArrayAdapter adapter_3;
+        //delete
+        FloatingActionButton deleteButton = ingredientsView.findViewById(R.id.delete_button);
 
-        adapter_1 = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, ingredients);
-        adapter_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinner ingredients
+        adapter_ingr = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, ingredients);
+        adapter_ingr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        test1.setAdapter(adapter_1);
+        spinnerIngr.setAdapter(adapter_ingr);
 
-        adapter_3 = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, units);
-        adapter_3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinner unit
+        adapter_unit = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, units);
+        adapter_unit.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        test3.setAdapter(adapter_3);
+        spinnerUnit.setAdapter(adapter_unit);
 
+        //amount
+        amount = ingredientsView.findViewById(R.id.text_amount);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeView(testView);
+                removeView(ingredientsView);
             }
         });
 
-        layout_list.addView(testView);
+        layout_list.addView(ingredientsView);
     }
 
     private void removeView(View view)
     {
+        Log.e(LOG_TAG, "--RemoveView--");
         layout_list.removeView(view);
+    }
+
+
+    private boolean checkIfValidAndRead() {
+        ingredients_list.clear();
+
+        for(int i=0;i<layout_list.getChildCount();i++)
+        {
+            View ingredientsView = layout_list.getChildAt(i);
+
+            EditText amount = ingredientsView.findViewById(R.id.text_amount);
+            Spinner spinnerIngr = ingredientsView.findViewById(R.id.spinner_ingr);
+            Spinner spinnerUnit = ingredientsView.findViewById(R.id.spinner_unit);
+
+            //check if spinner ing is set
+            if(spinnerIngr.getSelectedItemPosition()==0)
+            {
+                Toast toast = Toast.makeText(ingredientsView.getContext(), "Bitte eine Zutat auswählen", Toast.LENGTH_SHORT);
+                toast.show();
+                return false;
+            }
+
+
+            //check if amount is set and is only Numbers
+            if(amount.getText().toString().equals(""))
+            {
+                Toast toast = Toast.makeText(ingredientsView.getContext(), "Bitte Anzahl auswählen", Toast.LENGTH_SHORT);
+                toast.show();
+                return false;
+            }
+            else
+            {
+                String regex = "[0-9]+";
+                Pattern p = Pattern.compile(regex);
+
+                Matcher m = p.matcher(amount.getText().toString());
+
+                if(!m.matches())
+                {
+                    Toast toast = Toast.makeText(ingredientsView.getContext(), "Bitte nur Zahlen eingeben", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return false;
+                }
+            }
+
+
+            //check if spinner unit is set
+            if(spinnerUnit.getSelectedItemPosition()==0)
+            {
+                Toast toast = Toast.makeText(ingredientsView.getContext(), "Bitte eine Einheit auswählen", Toast.LENGTH_SHORT);
+                toast.show();
+                return false;
+            }
+
+            Item_ingredients ingredient = new Item_ingredients();
+
+            //get selected ingredients
+            int posi = spinnerIngr.getSelectedItemPosition();
+            ingredient.setIngredient(ingredients.get(posi));
+
+            //get given amount
+            ingredient.setAmount(amount.getText().toString());
+
+            //get selected unit
+            posi = spinnerUnit.getSelectedItemPosition();
+            ingredient.setUnit(units.get(posi));
+
+            ingredients_list.add(ingredient);
+        }
+        return  true;
     }
 }
