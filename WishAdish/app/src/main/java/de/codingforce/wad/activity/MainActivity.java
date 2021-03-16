@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,12 +15,12 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.codeingforce.wad.R;
 import de.codingforce.wad.fragment.Calendar;
 import de.codingforce.wad.fragment.CreatWish;
-import de.codingforce.wad.fragment.CreateDish;
 import de.codingforce.wad.fragment.Dishes;
 import de.codingforce.wad.fragment.Groups;
 import de.codingforce.wad.fragment.NameAwareFragment;
@@ -30,8 +28,6 @@ import de.codingforce.wad.fragment.OnManualDetachListener;
 import de.codingforce.wad.fragment.Landing_Page;
 import de.codingforce.wad.fragment.Shoppinglists;
 import de.codingforce.wad.fragment.ingredients;
-import de.codingforce.wad.fragment.tab.Dishes_Today;
-import de.codingforce.wad.fragment.tab.Open_Shoppinglists;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,8 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
 
+    public static final String URL = "http://10.0.2.2:3000/api/";
+    public static String userID = "3a2f5fdf-8b00-4b33-bd73-689a6544f027";
+    public static ArrayList<String> groups_main = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        groups_main.add("2985167a-f0dd-408c-a392-0b0a76b9b94d");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         //Startseite
-        Class Landing_Page = CreatWish.class;
+        Class Landing_Page = Landing_Page.class;
         placeFragment(Landing_Page, R.id.mainFrame);
 
     }
