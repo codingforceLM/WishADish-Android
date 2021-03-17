@@ -16,7 +16,9 @@ import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterOnClick;
+import de.codingforce.wad.fragment.adapter.RecylerAdapter_Shoppinglist;
 import de.codingforce.wad.item.Item_layout;
+import de.codingforce.wad.item.Item_layout_ingredients;
 import de.codingforce.wad.item.Item_shoppinglists;
 import de.codingforce.wad.item.Item_shoppinglists_ingredients;
 import de.codingforce.wad.item.Item_user;
@@ -32,7 +34,7 @@ public class Shoppinglist extends NameAwareFragment{
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ArrayList<Item_layout> ingredients = new ArrayList<>();
+    ArrayList<Item_layout_ingredients> ingredients = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -66,14 +68,18 @@ public class Shoppinglist extends NameAwareFragment{
                 Item_shoppinglists shoppinglists = response.body();
 
                 for(Item_shoppinglists_ingredients ingredient : shoppinglists.getIngredients()){
-                    ingredients.add(new Item_layout(ingredient.getName(),ingredient.getAmount() + " " + ingredient.getUnit()));
+                    boolean done = false;
+                    if(ingredient.getDone().equals("true")){
+                        done = true;
+                    }
+                    ingredients.add(new Item_layout_ingredients(ingredient.getName(),ingredient.getAmount() + " " + ingredient.getUnit(),done));
                 }
 
                 //Set up Recyler View
                 mRecyclerView = view.findViewById(R.id.shoppinglist_RecyclerView);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(view.getContext());
-                mAdapter = new RecylerAdapterOnClick(ingredients);
+                mAdapter = new RecylerAdapter_Shoppinglist(ingredients);
 
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
