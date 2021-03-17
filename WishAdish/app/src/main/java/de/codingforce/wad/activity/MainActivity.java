@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     public static String username;
     public static final String URL = "http://10.0.2.2:3000/api/";
     public static String userID;
+    public static String shoppinglistID;
+    public static String shoppinglistName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

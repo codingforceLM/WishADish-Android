@@ -16,7 +16,9 @@ import java.util.List;
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
+import de.codingforce.wad.fragment.Landing_Page;
 import de.codingforce.wad.fragment.NameAwareFragment;
+import de.codingforce.wad.fragment.Shoppinglist;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterOnClick;
 import de.codingforce.wad.item.Item_layout;
 import de.codingforce.wad.item.Item_shoppinglists;
@@ -87,8 +89,13 @@ public class Open_Shoppinglists extends NameAwareFragment {
                 mAdapter.setOnItemClickListener(new RecylerAdapterOnClick.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        String text = list.get(position).getmText1();
-                        Log.e(LOG_TAG, text);
+                        String text1 = list.get(position).getmText1();
+                        String text2 = list.get(position).getmText2();
+                        MainActivity.shoppinglistName = text1;
+                        MainActivity.shoppinglistID = text2;
+
+                        Class Shoppinglist = de.codingforce.wad.fragment.Shoppinglist.class;
+                        MainActivity.main. placeFragment(Shoppinglist, R.id.mainFrame);
                     }
                 });
             }
