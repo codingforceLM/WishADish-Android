@@ -45,22 +45,10 @@ public class Open_Shoppinglists extends NameAwareFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
-        /*
-        list.add(new Item_layout("Test","Best"));
-        list.add(new Item_layout("Test2","Best2"));
-        list.add(new Item_layout("Test3","Best3"));
-        list.add(new Item_layout("Test4","Best4"));
-        list.add(new Item_layout("Test","Best"));
-        list.add(new Item_layout("Test2","Best2"));
-        list.add(new Item_layout("Test3","Best3"));
-        list.add(new Item_layout("Test4","Best4"));
-        list.add(new Item_layout("Test","Best"));
-        list.add(new Item_layout("Test2","Best2"));
-        list.add(new Item_layout("Test3","Best3"));
-        list.add(new Item_layout("Test4","Best4"));*/
+
+        list.clear();
 
         //API get list
-        ArrayList<String> group = MainActivity.groups_main;
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MainActivity.URL)
@@ -69,7 +57,7 @@ public class Open_Shoppinglists extends NameAwareFragment {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<Item_shoppinglists>> call = jsonPlaceHolderApi.getShoppinglists(group.get(0));
+        Call<List<Item_shoppinglists>> call = jsonPlaceHolderApi.getShoppinglists(MainActivity.userID);
 
         call.enqueue(new Callback<List<Item_shoppinglists>>() {
             @Override

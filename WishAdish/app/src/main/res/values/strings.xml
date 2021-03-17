@@ -19,4 +19,7 @@
     <string name="Mittags">Mittags</string>
     <string name="Abends">Abends</string>
     <string name="titel">Titel:</string>
+    <string name="username">Username</string>
+    <string name="passwort">Passwort</string>
+    <string name="login">Login</string>
 </resources>

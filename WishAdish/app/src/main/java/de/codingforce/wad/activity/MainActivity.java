@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,14 +21,16 @@ import java.util.List;
 
 import de.codeingforce.wad.R;
 import de.codingforce.wad.fragment.Calendar;
-import de.codingforce.wad.fragment.CreatWish;
 import de.codingforce.wad.fragment.Dishes;
 import de.codingforce.wad.fragment.Groups;
+import de.codingforce.wad.fragment.Login;
 import de.codingforce.wad.fragment.NameAwareFragment;
 import de.codingforce.wad.fragment.OnManualDetachListener;
 import de.codingforce.wad.fragment.Landing_Page;
 import de.codingforce.wad.fragment.Shoppinglists;
 import de.codingforce.wad.fragment.ingredients;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,14 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
 
+    public static MainActivity main;
+
+    public static String username;
     public static final String URL = "http://10.0.2.2:3000/api/";
-    public static String userID = "3a2f5fdf-8b00-4b33-bd73-689a6544f027";
-    public static ArrayList<String> groups_main = new ArrayList<>();
+    public static String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        groups_main.add("2985167a-f0dd-408c-a392-0b0a76b9b94d");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -66,8 +69,10 @@ public class MainActivity extends AppCompatActivity {
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
+        main = this;
+
         //Startseite
-        Class Landing_Page = Landing_Page.class;
+        Class Landing_Page = Login.class;
         placeFragment(Landing_Page, R.id.mainFrame);
 
     }
@@ -221,10 +226,5 @@ public class MainActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawer.closeDrawers();
-    }
-
-    public void changeTitel(String titel)
-    {
-        setTitle(titel);
     }
 }
