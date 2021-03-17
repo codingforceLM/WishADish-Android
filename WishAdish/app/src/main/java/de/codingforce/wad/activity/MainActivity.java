@@ -71,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
         main = this;
 
-        //Startseite
-        Class Landing_Page = Login.class;
-        placeFragment(Landing_Page, R.id.mainFrame);
+        //Login
+        Class Login = Login.class;
+        placeFragment(Login, R.id.mainFrame);
 
     }
 
@@ -226,5 +226,9 @@ public class MainActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawer.closeDrawers();
+    }
+
+    public void change_title(String titel){
+        setTitle(titel);
     }
 }

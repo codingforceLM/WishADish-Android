@@ -37,6 +37,7 @@ public class Login extends NameAwareFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        MainActivity.main.change_title("Login");
         Log.e(LOG_TAG, "--onCreatedView--");
         return inflater.inflate(R.layout.fragment_login, parent, false);
     }
@@ -68,14 +69,16 @@ public class Login extends NameAwareFragment{
             call.enqueue(new Callback<Item_user>() {
                 @Override
                 public void onResponse(Call<Item_user> call, Response<Item_user> response) {
+                    //Check if user exists
                     if(!response.isSuccessful()) {
                         Toast toast = Toast.makeText(v.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
                         toast.show();
                         return;
                     }
+                    //get user ID and save it
                     Item_user user = response.body();
                     MainActivity.userID = user.getUserId();
-
+                    //go to Landing Page
                     Class Landing_Page = Landing_Page.class;
                     MainActivity.main. placeFragment(Landing_Page, R.id.mainFrame);
                 }

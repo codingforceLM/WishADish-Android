@@ -28,6 +28,7 @@ public class Landing_Page extends NameAwareFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        MainActivity.main.change_title("Startseite");
         Log.e(LOG_TAG, "--onCreatedView--");
         return inflater.inflate(R.layout.fragment_landing_page, parent, false);
     }
