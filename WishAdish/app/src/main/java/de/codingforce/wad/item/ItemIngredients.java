@@ -2,16 +2,16 @@ package de.codingforce.wad.item;
 
 import java.io.Serializable;
 
-public class Item_ingredients implements Serializable {
+public class ItemIngredients implements Serializable {
 
     private String ingredient;
     private String amount;
     private String unit;
 
-    public Item_ingredients() {
+    public ItemIngredients() {
     }
 
-    public Item_ingredients(String ingredient, String amount, String unit) {
+    public ItemIngredients(String ingredient, String amount, String unit) {
         this.ingredient = ingredient;
         this.amount = amount;
         this.unit = unit;

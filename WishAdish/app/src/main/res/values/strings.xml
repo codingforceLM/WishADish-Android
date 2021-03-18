@@ -23,4 +23,10 @@
     <string name="passwort">Passwort</string>
     <string name="login">Login</string>
     <string name="zutatenliste">Zutatenliste :</string>
+    <string name="mitglieder">Mitglieder</string>
+    <string name="benutzer">Benutzer</string>
+    <string name="profil">Profil</string>
+    <string name="name">Name</string>
+    <string name="geburtsdatum">Geburtsdatum</string>
+    <string name="email">Email</string>
 </resources>

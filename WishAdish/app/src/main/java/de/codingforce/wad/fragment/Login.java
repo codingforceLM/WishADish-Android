@@ -1,8 +1,6 @@
 package de.codingforce.wad.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import java.util.List;
-
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
-import de.codingforce.wad.item.Item_ingredients;
-import de.codingforce.wad.item.Item_shoppinglists;
-import de.codingforce.wad.item.Item_user;
+import de.codingforce.wad.item.ItemUser;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,10 +54,10 @@ public class Login extends NameAwareFragment{
 
             JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-            Call<Item_user> call = jsonPlaceHolderApi.getUser(MainActivity.username);
-            call.enqueue(new Callback<Item_user>() {
+            Call<ItemUser> call = jsonPlaceHolderApi.getUser(MainActivity.username);
+            call.enqueue(new Callback<ItemUser>() {
                 @Override
-                public void onResponse(Call<Item_user> call, Response<Item_user> response) {
+                public void onResponse(Call<ItemUser> call, Response<ItemUser> response) {
                     //Check if user exists
                     if(!response.isSuccessful()) {
                         Toast toast = Toast.makeText(v.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
@@ -76,15 +65,15 @@ public class Login extends NameAwareFragment{
                         return;
                     }
                     //get user ID and save it
-                    Item_user user = response.body();
+                    ItemUser user = response.body();
                     MainActivity.userID = user.getUserId();
                     //go to Landing Page
-                    Class Landing_Page = Landing_Page.class;
+                    Class Landing_Page = LandingPage.class;
                     MainActivity.main. placeFragment(Landing_Page, R.id.mainFrame);
                 }
 
                 @Override
-                public void onFailure(Call<Item_user> call, Throwable t) {
+                public void onFailure(Call<ItemUser> call, Throwable t) {
                     Log.e(LOG_TAG, t.getMessage());
                 }
             });

@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import de.codeingforce.wad.R;
-import de.codingforce.wad.item.layouts.Item_layout;
+import de.codingforce.wad.item.layouts.ItemLayout;
 
 public class RecylerAdapterOnClick extends RecyclerView.Adapter<RecylerAdapterOnClick.RecylerViewHolder> {
-    private ArrayList<Item_layout> mlist;
+    private ArrayList<ItemLayout> mlist;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -54,7 +54,7 @@ public class RecylerAdapterOnClick extends RecyclerView.Adapter<RecylerAdapterOn
         }
     }
 
-    public RecylerAdapterOnClick(ArrayList<Item_layout> list)
+    public RecylerAdapterOnClick(ArrayList<ItemLayout> list)
     {
         mlist = list;
     }
@@ -71,7 +71,7 @@ public class RecylerAdapterOnClick extends RecyclerView.Adapter<RecylerAdapterOn
 
     @Override
     public void onBindViewHolder(@NonNull RecylerViewHolder holder, int position) {
-        Item_layout currentItemlayout = mlist.get(position);
+        ItemLayout currentItemlayout = mlist.get(position);
 
         holder.mTextView1.setText(currentItemlayout.getmText1());
         holder.mTextView2.setText(currentItemlayout.getmText2());

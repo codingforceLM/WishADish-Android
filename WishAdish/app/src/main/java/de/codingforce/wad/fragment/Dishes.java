@@ -17,8 +17,8 @@ import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterOnClick;
-import de.codingforce.wad.item.Item_dish;
-import de.codingforce.wad.item.layouts.Item_layout;
+import de.codingforce.wad.item.ItemDish;
+import de.codingforce.wad.item.layouts.ItemLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,7 +32,7 @@ public class Dishes extends NameAwareFragment {
     private RecylerAdapterOnClick mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ArrayList<Item_layout> list = new ArrayList<>();
+    ArrayList<ItemLayout> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -54,19 +54,19 @@ public class Dishes extends NameAwareFragment {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<Item_dish>> call = jsonPlaceHolderApi.getDishes(MainActivity.userID);
-        call.enqueue(new Callback<List<Item_dish>>() {
+        Call<List<ItemDish>> call = jsonPlaceHolderApi.getDishes(MainActivity.userID);
+        call.enqueue(new Callback<List<ItemDish>>() {
             @Override
-            public void onResponse(Call<List<Item_dish>> call, Response<List<Item_dish>> response) {
+            public void onResponse(Call<List<ItemDish>> call, Response<List<ItemDish>> response) {
                 if(!response.isSuccessful()) {
                     Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
-                List<Item_dish> dishes = response.body();
+                List<ItemDish> dishes = response.body();
 
-                for(Item_dish dish : dishes){
-                    list.add(new Item_layout(dish.getName(),dish.getId()));
+                for(ItemDish dish : dishes){
+                    list.add(new ItemLayout(dish.getName(),dish.getId()));
                 }
 
                 //Set up Recycler
@@ -93,7 +93,7 @@ public class Dishes extends NameAwareFragment {
             }
 
             @Override
-            public void onFailure(Call<List<Item_dish>> call, Throwable t) {
+            public void onFailure(Call<List<ItemDish>> call, Throwable t) {
                 Log.e(LOG_TAG, t.getMessage());
             }
         });

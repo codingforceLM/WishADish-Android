@@ -45,7 +45,7 @@ public class Calendar extends NameAwareFragment {
                 Log.e(LOG_TAG, "date : " +Year+"/"+Month+"/"+curDate);
                 MainActivity.tag = new Date(year,month,curDate);
                 //Show wishes for selected Date
-                Class Dishes_from_date = Wishes_from_date.class;
+                Class Dishes_from_date = WishesFromDate.class;
                 MainActivity.main.placeFragment(Dishes_from_date, R.id.mainFrame);
             }
         });

@@ -2,10 +2,10 @@ package de.codingforce.wad.item;
 
 import java.util.List;
 
-public class Item_dish {
+public class ItemDish {
     String id;
     String name;
-    private List<Item_shoppinglists_ingredients> ingredients;
+    private List<ItemShoppinglistsIngredients> ingredients;
 
     public String getId() {
         return id;
@@ -15,7 +15,7 @@ public class Item_dish {
         return name;
     }
 
-    public List<Item_shoppinglists_ingredients> getIngredients() {
+    public List<ItemShoppinglistsIngredients> getIngredients() {
         return ingredients;
     }
 }

@@ -1,6 +1,6 @@
 package de.codingforce.wad.item;
 
-public class Item_shoppinglists_ingredients {
+public class ItemShoppinglistsIngredients {
     String id;
     String name;
     String amount;

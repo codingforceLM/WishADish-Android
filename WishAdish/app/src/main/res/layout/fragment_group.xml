@@ -5,13 +5,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Zutaten" />
+        android:text="@string/mitglieder" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecylerView_Ingredients"
+        android:id="@+id/RecylerView_Group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/darker_gray"/>

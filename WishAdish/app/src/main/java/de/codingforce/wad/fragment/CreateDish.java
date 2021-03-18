@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.codeingforce.wad.R;
-import de.codingforce.wad.item.Item_ingredients;
+import de.codingforce.wad.item.ItemIngredients;
 
 public class CreateDish extends NameAwareFragment {
     private static final String LOG_TAG = "CreatDishes";
@@ -34,7 +34,7 @@ public class CreateDish extends NameAwareFragment {
     private ArrayList<String> units;
 
     //Ingredientslist
-    private ArrayList<Item_ingredients> ingredients_list = new ArrayList<>();
+    private ArrayList<ItemIngredients> ingredients_list = new ArrayList<>();
 
 
     @Override
@@ -90,7 +90,7 @@ public class CreateDish extends NameAwareFragment {
                 //get Name
                 Log.e(LOG_TAG, dish_name.getText().toString());
 
-                for(Item_ingredients i : ingredients_list)
+                for(ItemIngredients i : ingredients_list)
                 {
                     Log.e(LOG_TAG, "Ingredients :" + i.getIngredient() + "Amount :"+ i.getAmount() +"Unit :" + i.getUnit());
                 }
@@ -205,7 +205,7 @@ public class CreateDish extends NameAwareFragment {
                 return false;
             }
 
-            Item_ingredients ingredient = new Item_ingredients();
+            ItemIngredients ingredient = new ItemIngredients();
 
             //get selected ingredients
             int posi = spinnerIngr.getSelectedItemPosition();

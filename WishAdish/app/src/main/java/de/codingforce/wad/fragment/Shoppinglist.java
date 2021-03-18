@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
-import de.codingforce.wad.fragment.adapter.RecylerAdapter_Shoppinglist;
-import de.codingforce.wad.item.layouts.Item_layout_ingredients;
-import de.codingforce.wad.item.Item_shoppinglists;
-import de.codingforce.wad.item.Item_shoppinglists_ingredients;
+import de.codingforce.wad.fragment.adapter.RecylerAdapterShoppinglist;
+import de.codingforce.wad.item.layouts.ItemLayoutIngredients;
+import de.codingforce.wad.item.ItemShoppinglists;
+import de.codingforce.wad.item.ItemShoppinglistsIngredients;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,7 +31,7 @@ public class Shoppinglist extends NameAwareFragment{
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ArrayList<Item_layout_ingredients> ingredients = new ArrayList<>();
+    ArrayList<ItemLayoutIngredients> ingredients = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -52,38 +52,38 @@ public class Shoppinglist extends NameAwareFragment{
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<Item_shoppinglists> call = jsonPlaceHolderApi.getShoppinglist(MainActivity.shoppinglistID);
-        call.enqueue(new Callback<Item_shoppinglists>() {
+        Call<ItemShoppinglists> call = jsonPlaceHolderApi.getShoppinglist(MainActivity.shoppinglistID);
+        call.enqueue(new Callback<ItemShoppinglists>() {
             @Override
-            public void onResponse(Call<Item_shoppinglists> call, Response<Item_shoppinglists> response) {
+            public void onResponse(Call<ItemShoppinglists> call, Response<ItemShoppinglists> response) {
 
                 if(!response.isSuccessful()) {
                     Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
-                Item_shoppinglists shoppinglists = response.body();
+                ItemShoppinglists shoppinglists = response.body();
 
-                for(Item_shoppinglists_ingredients ingredient : shoppinglists.getIngredients()){
+                for(ItemShoppinglistsIngredients ingredient : shoppinglists.getIngredients()){
                     boolean done = false;
                     if(ingredient.getDone().equals("true")){
                         done = true;
                     }
-                    ingredients.add(new Item_layout_ingredients(ingredient.getName(),ingredient.getAmount() + " " + ingredient.getUnit(),done));
+                    ingredients.add(new ItemLayoutIngredients(ingredient.getName(),ingredient.getAmount() + " " + ingredient.getUnit(),done));
                 }
 
                 //Set up Recyler View
                 mRecyclerView = view.findViewById(R.id.shoppinglist_RecyclerView);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(view.getContext());
-                mAdapter = new RecylerAdapter_Shoppinglist(ingredients);
+                mAdapter = new RecylerAdapterShoppinglist(ingredients);
 
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
-            public void onFailure(Call<Item_shoppinglists> call, Throwable t) {
+            public void onFailure(Call<ItemShoppinglists> call, Throwable t) {
                 Log.e(LOG_TAG, t.getMessage());
             }
         });

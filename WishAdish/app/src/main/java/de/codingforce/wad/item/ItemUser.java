@@ -1,11 +1,12 @@
 package de.codingforce.wad.item;
 
-public class Item_user {
+public class ItemUser {
     private String userId;
     private String firstname;
     private String lastname;
     private String birthdate;
     private String email;
+    private String fileurl;
 
     public String getUserId() {
         return userId;
@@ -25,5 +26,9 @@ public class Item_user {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getFileurl() {
+        return fileurl;
     }
 }

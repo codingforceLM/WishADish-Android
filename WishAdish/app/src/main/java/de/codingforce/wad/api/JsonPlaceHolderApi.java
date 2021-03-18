@@ -2,41 +2,52 @@ package de.codingforce.wad.api;
 
 import java.util.List;
 
-import de.codingforce.wad.activity.MainActivity;
-import de.codingforce.wad.item.Item_dish;
-import de.codingforce.wad.item.Item_shoppinglists;
-import de.codingforce.wad.item.Item_shoppinglists_ingredients;
-import de.codingforce.wad.item.Item_user;
-import de.codingforce.wad.item.Item_wish;
+import de.codingforce.wad.item.ItemDish;
+import de.codingforce.wad.item.ItemGroups;
+import de.codingforce.wad.item.ItemIngredient;
+import de.codingforce.wad.item.ItemShoppinglists;
+import de.codingforce.wad.item.ItemUser;
+import de.codingforce.wad.item.ItemWish;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Path;
 
 public interface JsonPlaceHolderApi {
     //Shoppinglist
     @GET("list")
-    Call<List<Item_shoppinglists>> getShoppinglists(@Header("userID") String userID);
+    Call<List<ItemShoppinglists>> getShoppinglists(@Header("userID") String userID);
 
     @GET("list/{listID}")
-    Call<Item_shoppinglists> getShoppinglist(@Path("listID") String listID);
+    Call<ItemShoppinglists> getShoppinglist(@Path("listID") String listID);
 
 
     //User
     @GET("user/{username}")
-    Call<Item_user> getUser(@Path("username")String username);
+    Call<ItemUser> getUser(@Path("username")String username);
 
 
     //Wish
     @GET("wish")
-    Call<List<Item_wish>> getWish(@Header("userID")String userID, @Header("month") String month, @Header("day") String day);
+    Call<List<ItemWish>> getWish(@Header("userID")String userID, @Header("month") String month, @Header("day") String day);
 
 
     //dishes
     @GET("dish")
-    Call<List<Item_dish>> getDishes(@Header("userID")String userID);
+    Call<List<ItemDish>> getDishes(@Header("userID")String userID);
 
     @GET("dish/{dishID}")
-    Call<Item_dish> getDish(@Path("dishID")String dishID);
+    Call<ItemDish> getDish(@Path("dishID")String dishID);
+
+
+    //Ingredients
+    @GET("ingrd")
+    Call<List<ItemIngredient>> getIngredients(@Header("userID")String userID);
+
+    //group
+    @GET("group")
+    Call<List<ItemGroups>> getGroups(@Header("userID")String userID);
+
+    @GET("group/{groupID}")
+    Call<ItemGroups> getGroup(@Path("groupID")String groupID);
 }

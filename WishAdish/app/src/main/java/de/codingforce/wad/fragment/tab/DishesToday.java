@@ -20,15 +20,15 @@ import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
 import de.codingforce.wad.fragment.NameAwareFragment;
 import de.codingforce.wad.fragment.adapter.RecylerAdapter;
-import de.codingforce.wad.item.layouts.Item_layout;
-import de.codingforce.wad.item.Item_wish;
+import de.codingforce.wad.item.layouts.ItemLayout;
+import de.codingforce.wad.item.ItemWish;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Dishes_Today extends NameAwareFragment {
+public class DishesToday extends NameAwareFragment {
 
     private static final String LOG_TAG = "Dishes_Today";
 
@@ -44,9 +44,9 @@ public class Dishes_Today extends NameAwareFragment {
     private RecyclerView.Adapter mAdapter_evening;
     private RecyclerView.LayoutManager mLayoutManager_evening;
 
-    private ArrayList<Item_layout> list_morning = new ArrayList<>();
-    private ArrayList<Item_layout> list_lunch = new ArrayList<>();
-    private ArrayList<Item_layout> list_evening = new ArrayList<>();
+    private ArrayList<ItemLayout> list_morning = new ArrayList<>();
+    private ArrayList<ItemLayout> list_lunch = new ArrayList<>();
+    private ArrayList<ItemLayout> list_evening = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -80,24 +80,24 @@ public class Dishes_Today extends NameAwareFragment {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<Item_wish>> call = jsonPlaceHolderApi.getWish(MainActivity.userID,month,day);
-        call.enqueue(new Callback<List<Item_wish>>() {
+        Call<List<ItemWish>> call = jsonPlaceHolderApi.getWish(MainActivity.userID,month,day);
+        call.enqueue(new Callback<List<ItemWish>>() {
             @Override
-            public void onResponse(Call<List<Item_wish>> call, Response<List<Item_wish>> response) {
+            public void onResponse(Call<List<ItemWish>> call, Response<List<ItemWish>> response) {
                 if(!response.isSuccessful()) {
                     Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
-                List<Item_wish> wishes = response.body();
+                List<ItemWish> wishes = response.body();
 
-                for(Item_wish wish : wishes){
+                for(ItemWish wish : wishes){
                     if(wish.getDaytime().equals("morning")) {
-                        list_morning.add(new Item_layout(wish.getName(),wish.getGroupname()));
+                        list_morning.add(new ItemLayout(wish.getName(),wish.getGroupname()));
                     }else if(wish.getDaytime().equals("lunch")){
-                        list_lunch.add(new Item_layout(wish.getName(),wish.getGroupname()));
+                        list_lunch.add(new ItemLayout(wish.getName(),wish.getGroupname()));
                     }else if(wish.getDaytime().equals("evening")){
-                        list_evening.add(new Item_layout(wish.getName(),wish.getGroupname()));
+                        list_evening.add(new ItemLayout(wish.getName(),wish.getGroupname()));
                     }
                 }
 
@@ -131,7 +131,7 @@ public class Dishes_Today extends NameAwareFragment {
             }
 
             @Override
-            public void onFailure(Call<List<Item_wish>> call, Throwable t) {
+            public void onFailure(Call<List<ItemWish>> call, Throwable t) {
                 Log.e(LOG_TAG, t.getMessage());
             }
         });

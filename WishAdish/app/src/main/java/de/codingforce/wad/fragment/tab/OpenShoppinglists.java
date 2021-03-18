@@ -18,22 +18,22 @@ import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
 import de.codingforce.wad.fragment.NameAwareFragment;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterOnClick;
-import de.codingforce.wad.item.layouts.Item_layout;
-import de.codingforce.wad.item.Item_shoppinglists;
+import de.codingforce.wad.item.layouts.ItemLayout;
+import de.codingforce.wad.item.ItemShoppinglists;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Open_Shoppinglists extends NameAwareFragment {
+public class OpenShoppinglists extends NameAwareFragment {
     private RecyclerView mRecyclerView;
     private RecylerAdapterOnClick mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private static final String LOG_TAG = "Open_Shoppinglists";
 
-    ArrayList<Item_layout> list = new ArrayList<>();
+    ArrayList<ItemLayout> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -57,22 +57,22 @@ public class Open_Shoppinglists extends NameAwareFragment {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<Item_shoppinglists>> call = jsonPlaceHolderApi.getShoppinglists(MainActivity.userID);
+        Call<List<ItemShoppinglists>> call = jsonPlaceHolderApi.getShoppinglists(MainActivity.userID);
 
-        call.enqueue(new Callback<List<Item_shoppinglists>>() {
+        call.enqueue(new Callback<List<ItemShoppinglists>>() {
             @Override
-            public void onResponse(Call<List<Item_shoppinglists>> call, Response<List<Item_shoppinglists>> response) {
+            public void onResponse(Call<List<ItemShoppinglists>> call, Response<List<ItemShoppinglists>> response) {
 
                 if(!response.isSuccessful()) {
                     Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
-                List<Item_shoppinglists> shoppinglists = response.body();
+                List<ItemShoppinglists> shoppinglists = response.body();
 
-                for(Item_shoppinglists shopping_list : shoppinglists)
+                for(ItemShoppinglists shopping_list : shoppinglists)
                 {
-                    list.add(new Item_layout(shopping_list.getName(),shopping_list.getId()));
+                    list.add(new ItemLayout(shopping_list.getName(),shopping_list.getId()));
                     Log.e(LOG_TAG,shopping_list.getId() + shopping_list.getName());
                 }
                 //Set up Recycler
@@ -99,7 +99,7 @@ public class Open_Shoppinglists extends NameAwareFragment {
             }
 
             @Override
-            public void onFailure(Call<List<Item_shoppinglists>> call, Throwable t) {
+            public void onFailure(Call<List<ItemShoppinglists>> call, Throwable t) {
                 Log.e(LOG_TAG, t.getMessage());
             }
         });

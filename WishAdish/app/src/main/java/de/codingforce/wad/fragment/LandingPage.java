@@ -17,7 +17,7 @@ import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.fragment.adapter.TabFragmentAdapter;
 
-public class Landing_Page extends NameAwareFragment {
+public class LandingPage extends NameAwareFragment {
 
     private static final String LOG_TAG = "Landing Page";
     private final String[] tabTexts = new String[]{"Gerichte Heute", "Aktive Einkaufslisten"};

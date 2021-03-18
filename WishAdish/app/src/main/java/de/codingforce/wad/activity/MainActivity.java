@@ -9,29 +9,26 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import de.codeingforce.wad.R;
+import de.codingforce.wad.fragment.User;
 import de.codingforce.wad.fragment.Calendar;
 import de.codingforce.wad.fragment.Dishes;
 import de.codingforce.wad.fragment.Groups;
 import de.codingforce.wad.fragment.Login;
 import de.codingforce.wad.fragment.NameAwareFragment;
 import de.codingforce.wad.fragment.OnManualDetachListener;
-import de.codingforce.wad.fragment.Landing_Page;
+import de.codingforce.wad.fragment.LandingPage;
 import de.codingforce.wad.fragment.Shoppinglists;
-import de.codingforce.wad.fragment.ingredients;
-
-import static java.security.AccessController.getContext;
+import de.codingforce.wad.fragment.Ingredients;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     public static Date tag;
     public static String dishID;
     public static String dishName;
+    public static String groupID;
+    public static String groupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         Class fragmentClass;
         switch(menuItem.getItemId()) {
             case R.id.nav_landing_page:
-                fragmentClass = Landing_Page.class;
+                fragmentClass = LandingPage.class;
                 break;
             case R.id.nav_calender:
                 fragmentClass = Calendar.class;
@@ -207,13 +206,16 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = Dishes.class;
                 break;
             case R.id.nav_ingredients:
-                fragmentClass = ingredients.class;
+                fragmentClass = Ingredients.class;
                 break;
             case R.id.nav_groups:
                 fragmentClass = Groups.class;
                 break;
+            case R.id.nav_user:
+                fragmentClass = User.class;
+                break;
             default:
-                fragmentClass = Landing_Page.class;
+                fragmentClass = LandingPage.class;
         }
 
         try {

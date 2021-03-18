@@ -3,14 +3,14 @@ package de.codingforce.wad.item;
 
 import java.util.List;
 
-public class Item_shoppinglists {
+public class ItemShoppinglists {
     private String id;
 
     private String name;
 
     private String done;
 
-    private List<Item_shoppinglists_ingredients> ingredients;
+    private List<ItemShoppinglistsIngredients> ingredients;
 
     public String getId() {
         return id;
@@ -20,7 +20,7 @@ public class Item_shoppinglists {
         return name;
     }
 
-    public List<Item_shoppinglists_ingredients> getIngredients() {
+    public List<ItemShoppinglistsIngredients> getIngredients() {
         return ingredients;
     }
 }

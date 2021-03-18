@@ -16,11 +16,9 @@ import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
 import de.codingforce.wad.fragment.adapter.RecylerAdapter;
-import de.codingforce.wad.fragment.adapter.RecylerAdapter_Shoppinglist;
-import de.codingforce.wad.item.Item_dish;
-import de.codingforce.wad.item.Item_shoppinglists;
-import de.codingforce.wad.item.Item_shoppinglists_ingredients;
-import de.codingforce.wad.item.layouts.Item_layout;
+import de.codingforce.wad.item.ItemDish;
+import de.codingforce.wad.item.ItemShoppinglistsIngredients;
+import de.codingforce.wad.item.layouts.ItemLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +32,7 @@ public class Dish extends NameAwareFragment{
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ArrayList<Item_layout> list = new ArrayList<>();
+    ArrayList<ItemLayout> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -55,19 +53,19 @@ public class Dish extends NameAwareFragment{
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<Item_dish> call = jsonPlaceHolderApi.getDish(MainActivity.dishID);
-        call.enqueue(new Callback<Item_dish>() {
+        Call<ItemDish> call = jsonPlaceHolderApi.getDish(MainActivity.dishID);
+        call.enqueue(new Callback<ItemDish>() {
             @Override
-            public void onResponse(Call<Item_dish> call, Response<Item_dish> response) {
+            public void onResponse(Call<ItemDish> call, Response<ItemDish> response) {
                 if(!response.isSuccessful()) {
                     Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
-                Item_dish dish = response.body();
+                ItemDish dish = response.body();
 
-                for(Item_shoppinglists_ingredients ingredient : dish.getIngredients()){
-                    list.add(new Item_layout(ingredient.getName(),ingredient.getAmount() + " " + ingredient.getUnit()));
+                for(ItemShoppinglistsIngredients ingredient : dish.getIngredients()){
+                    list.add(new ItemLayout(ingredient.getName(),ingredient.getAmount() + " " + ingredient.getUnit()));
                 }
 
                 //Set up Recyler View
@@ -81,7 +79,7 @@ public class Dish extends NameAwareFragment{
             }
 
             @Override
-            public void onFailure(Call<Item_dish> call, Throwable t) {
+            public void onFailure(Call<ItemDish> call, Throwable t) {
                 Log.e(LOG_TAG, t.getMessage());
             }
         });

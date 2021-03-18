@@ -11,13 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
+import de.codingforce.wad.fragment.adapter.RecylerAdapter;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterOnClick;
+import de.codingforce.wad.fragment.adapter.RecylerAdapterShoppinglist;
+import de.codingforce.wad.item.ItemGroup;
 import de.codingforce.wad.item.ItemGroups;
+import de.codingforce.wad.item.ItemShoppinglists;
 import de.codingforce.wad.item.layouts.ItemLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,11 +28,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Groups extends NameAwareFragment{
-    private static final String LOG_TAG = "Groups";
+public class Group extends NameAwareFragment{
+    private static final String LOG_TAG = "Group";
 
     private RecyclerView mRecyclerView;
-    private RecylerAdapterOnClick mAdapter;
+    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     ArrayList<ItemLayout> list = new ArrayList<>();
@@ -37,13 +40,14 @@ public class Groups extends NameAwareFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         Log.e(LOG_TAG, "--onCreatedView--");
-        return inflater.inflate(R.layout.fragment_groups, parent, false);
+        return inflater.inflate(R.layout.fragment_group, parent, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
+        MainActivity.main.change_title(MainActivity.groupName);
 
         list.clear();
 
@@ -54,50 +58,32 @@ public class Groups extends NameAwareFragment{
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<ItemGroups>> call = jsonPlaceHolderApi.getGroups(MainActivity.userID);
-        call.enqueue(new Callback<List<ItemGroups>>() {
+        Call<ItemGroups> call = jsonPlaceHolderApi.getGroup(MainActivity.groupID);
+        call.enqueue(new Callback<ItemGroups>() {
             @Override
-            public void onResponse(Call<List<ItemGroups>> call, Response<List<ItemGroups>> response) {
+            public void onResponse(Call<ItemGroups> call, Response<ItemGroups> response) {
                 if(!response.isSuccessful()) {
                     Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
-
-                List<ItemGroups> groups = response.body();
-                for(ItemGroups group : groups){
-                    list.add(new ItemLayout(group.getTitle(),"Erstellt am : " + group.getCreation()));
+                ItemGroups groups = response.body();
+                for(ItemGroup group : groups.getUser()){
+                    list.add(new ItemLayout(group.getName(),group.getRole()));
                 }
-
-                //Set up Recycler
-                mRecyclerView = view.findViewById(R.id.RecylerView_groups);
+                //Set up Recyler View
+                mRecyclerView = view.findViewById(R.id.RecylerView_Group);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(view.getContext());
-                mAdapter = new RecylerAdapterOnClick(list);
+                mAdapter = new RecylerAdapter(list);
 
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
 
-                mAdapter.setOnItemClickListener(new RecylerAdapterOnClick.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        String text1 = list.get(position).getmText1();
-                        MainActivity.groupName = text1;
-                        for(ItemGroups group : groups){
-                            if(group.getTitle().equals(text1)) {
-                                MainActivity.groupID = group.getId();
-                            }
-                        }
-
-                        //Group
-                        Class Group = Group.class;
-                        MainActivity.main.placeFragment(Group, R.id.mainFrame);
-                    }
-                });
             }
 
             @Override
-            public void onFailure(Call<List<ItemGroups>> call, Throwable t) {
+            public void onFailure(Call<ItemGroups> call, Throwable t) {
                 Log.e(LOG_TAG, t.getMessage());
             }
         });

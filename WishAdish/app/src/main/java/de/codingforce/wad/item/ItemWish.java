@@ -1,6 +1,6 @@
 package de.codingforce.wad.item;
 
-public class Item_wish {
+public class ItemWish {
     String id;
     String name;
     String groupname;

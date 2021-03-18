@@ -4,15 +4,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import de.codingforce.wad.activity.MainActivity;
-import de.codingforce.wad.fragment.tab.Dishes_Today;
-import de.codingforce.wad.fragment.tab.Open_Shoppinglists;
+import de.codingforce.wad.fragment.tab.DishesToday;
+import de.codingforce.wad.fragment.tab.OpenShoppinglists;
 
 /**
  * Adapter class to retrieve fragments for tabs
@@ -38,13 +36,13 @@ public class TabFragmentAdapter extends FragmentStateAdapter{
         {
             case 0:
                 Log.e(LOG_TAG, "position:"+position+", creating ");
-                return new Dishes_Today();
+                return new DishesToday();
             case 1:
                 Log.e(LOG_TAG, "position:"+position+", creating ");
-                return new Open_Shoppinglists();
+                return new OpenShoppinglists();
             default:
                 Log.e(LOG_TAG, "position:"+position+", creating ");
-                return new Dishes_Today();
+                return new DishesToday();
         }
     }
 
