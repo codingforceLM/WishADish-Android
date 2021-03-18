@@ -1,4 +1,4 @@
-package de.codingforce.wad.item;
+package de.codingforce.wad.item.layouts;
 
 public class Item_layout_ingredients {
     private String mText1;

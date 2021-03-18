@@ -3,6 +3,7 @@ package de.codingforce.wad.api;
 import java.util.List;
 
 import de.codingforce.wad.activity.MainActivity;
+import de.codingforce.wad.item.Item_dish;
 import de.codingforce.wad.item.Item_shoppinglists;
 import de.codingforce.wad.item.Item_shoppinglists_ingredients;
 import de.codingforce.wad.item.Item_user;
@@ -30,4 +31,12 @@ public interface JsonPlaceHolderApi {
     //Wish
     @GET("wish")
     Call<List<Item_wish>> getWish(@Header("userID")String userID, @Header("month") String month, @Header("day") String day);
+
+
+    //dishes
+    @GET("dish")
+    Call<List<Item_dish>> getDishes(@Header("userID")String userID);
+
+    @GET("dish/{dishID}")
+    Call<Item_dish> getDish(@Path("dishID")String dishID);
 }

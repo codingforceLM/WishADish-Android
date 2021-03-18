@@ -22,4 +22,5 @@
     <string name="username">Username</string>
     <string name="passwort">Passwort</string>
     <string name="login">Login</string>
+    <string name="zutatenliste">Zutatenliste :</string>
 </resources>

@@ -12,14 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
 import de.codingforce.wad.fragment.adapter.RecylerAdapter;
-import de.codingforce.wad.item.Item_layout;
+import de.codingforce.wad.item.layouts.Item_layout;
 import de.codingforce.wad.item.Item_wish;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,8 +26,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Dishes_from_date extends NameAwareFragment{
-    private static final String LOG_TAG = "Dishes_from_date";
+public class Wishes_from_date extends NameAwareFragment{
+    private static final String LOG_TAG = "Wishes_from_date";
 
     private RecyclerView mRecyclerView_morning;
     private RecyclerView.Adapter mAdapter_morning;
@@ -71,7 +70,7 @@ public class Dishes_from_date extends NameAwareFragment{
         }
         String day = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 
-        MainActivity.main.change_title("Gericht vom :"+ day + "."+month+"."+"2021");
+        MainActivity.main.change_title("Wünsche für :"+ day + "."+month+"."+"2021");
 
         //API
         Retrofit retrofit = new Retrofit.Builder()

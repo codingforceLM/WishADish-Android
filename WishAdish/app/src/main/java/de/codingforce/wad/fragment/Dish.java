@@ -15,35 +15,38 @@ import java.util.ArrayList;
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
+import de.codingforce.wad.fragment.adapter.RecylerAdapter;
 import de.codingforce.wad.fragment.adapter.RecylerAdapter_Shoppinglist;
-import de.codingforce.wad.item.layouts.Item_layout_ingredients;
+import de.codingforce.wad.item.Item_dish;
 import de.codingforce.wad.item.Item_shoppinglists;
 import de.codingforce.wad.item.Item_shoppinglists_ingredients;
+import de.codingforce.wad.item.layouts.Item_layout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Shoppinglist extends NameAwareFragment{
-    private static final String LOG_TAG = "Shoppinglist";
+public class Dish extends NameAwareFragment{
+    private static final String LOG_TAG = "Dish";
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ArrayList<Item_layout_ingredients> ingredients = new ArrayList<>();
+    ArrayList<Item_layout> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         Log.e(LOG_TAG, "--onCreatedView--");
-        return inflater.inflate(R.layout.fragment_shoppinglist, parent, false);
+        return inflater.inflate(R.layout.fragment_dish, parent, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
-        MainActivity.main.change_title(MainActivity.shoppinglistName);
-
+        MainActivity.main.change_title(MainActivity.dishName);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MainActivity.URL)
@@ -52,38 +55,33 @@ public class Shoppinglist extends NameAwareFragment{
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<Item_shoppinglists> call = jsonPlaceHolderApi.getShoppinglist(MainActivity.shoppinglistID);
-        call.enqueue(new Callback<Item_shoppinglists>() {
+        Call<Item_dish> call = jsonPlaceHolderApi.getDish(MainActivity.dishID);
+        call.enqueue(new Callback<Item_dish>() {
             @Override
-            public void onResponse(Call<Item_shoppinglists> call, Response<Item_shoppinglists> response) {
-
+            public void onResponse(Call<Item_dish> call, Response<Item_dish> response) {
                 if(!response.isSuccessful()) {
                     Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
-                Item_shoppinglists shoppinglists = response.body();
+                Item_dish dish = response.body();
 
-                for(Item_shoppinglists_ingredients ingredient : shoppinglists.getIngredients()){
-                    boolean done = false;
-                    if(ingredient.getDone().equals("true")){
-                        done = true;
-                    }
-                    ingredients.add(new Item_layout_ingredients(ingredient.getName(),ingredient.getAmount() + " " + ingredient.getUnit(),done));
+                for(Item_shoppinglists_ingredients ingredient : dish.getIngredients()){
+                    list.add(new Item_layout(ingredient.getName(),ingredient.getAmount() + " " + ingredient.getUnit()));
                 }
 
                 //Set up Recyler View
-                mRecyclerView = view.findViewById(R.id.shoppinglist_RecyclerView);
+                mRecyclerView = view.findViewById(R.id.Recylerview_dish);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(view.getContext());
-                mAdapter = new RecylerAdapter_Shoppinglist(ingredients);
+                mAdapter = new RecylerAdapter(list);
 
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
-            public void onFailure(Call<Item_shoppinglists> call, Throwable t) {
+            public void onFailure(Call<Item_dish> call, Throwable t) {
                 Log.e(LOG_TAG, t.getMessage());
             }
         });

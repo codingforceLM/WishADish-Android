@@ -11,7 +11,6 @@ import java.util.Date;
 
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
-import de.codingforce.wad.fragment.NameAwareFragment;
 
 public class Calendar extends NameAwareFragment {
     private static final String LOG_TAG = "Calender";
@@ -46,7 +45,7 @@ public class Calendar extends NameAwareFragment {
                 Log.e(LOG_TAG, "date : " +Year+"/"+Month+"/"+curDate);
                 MainActivity.tag = new Date(year,month,curDate);
                 //Show wishes for selected Date
-                Class Dishes_from_date = Dishes_from_date.class;
+                Class Dishes_from_date = Wishes_from_date.class;
                 MainActivity.main.placeFragment(Dishes_from_date, R.id.mainFrame);
             }
         });

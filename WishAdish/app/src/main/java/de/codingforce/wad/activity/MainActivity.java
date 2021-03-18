@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     public static String shoppinglistID;
     public static String shoppinglistName;
     public static Date tag;
+    public static String dishID;
+    public static String dishName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

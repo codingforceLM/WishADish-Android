@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import de.codeingforce.wad.R;
-import de.codingforce.wad.item.Item_layout;
+import de.codingforce.wad.item.layouts.Item_layout;
 
 public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.RecylerViewHolder> {
     private ArrayList<Item_layout> mlist;
