@@ -7,16 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 
+import java.util.Date;
+
 import de.codeingforce.wad.R;
+import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.fragment.NameAwareFragment;
 
 public class Calendar extends NameAwareFragment {
     private static final String LOG_TAG = "Calender";
 
     private CalendarView calendarView;
-    private String  curDate;
-    private String  Year;
-    private String  Month;
+    private int  curDate;
+    private int  Year;
+    private int  Month;
 
 
     @Override
@@ -37,10 +40,14 @@ public class Calendar extends NameAwareFragment {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
-                curDate = String.valueOf(dayOfMonth);
-                Year = String.valueOf(year);
-                Month = String.valueOf(month + 1);
+                curDate = dayOfMonth;
+                Year = year;
+                Month = month;
                 Log.e(LOG_TAG, "date : " +Year+"/"+Month+"/"+curDate);
+                MainActivity.tag = new Date(year,month,curDate);
+                //Show wishes for selected Date
+                Class Dishes_from_date = Dishes_from_date.class;
+                MainActivity.main.placeFragment(Dishes_from_date, R.id.mainFrame);
             }
         });
     }

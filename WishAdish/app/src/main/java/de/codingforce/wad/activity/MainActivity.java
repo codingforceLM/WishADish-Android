@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.codeingforce.wad.R;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public static String userID;
     public static String shoppinglistID;
     public static String shoppinglistName;
+    public static Date tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

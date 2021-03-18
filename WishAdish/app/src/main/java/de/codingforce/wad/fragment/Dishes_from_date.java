@@ -1,0 +1,140 @@
+package de.codingforce.wad.fragment;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import de.codeingforce.wad.R;
+import de.codingforce.wad.activity.MainActivity;
+import de.codingforce.wad.api.JsonPlaceHolderApi;
+import de.codingforce.wad.fragment.adapter.RecylerAdapter;
+import de.codingforce.wad.item.Item_layout;
+import de.codingforce.wad.item.Item_wish;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class Dishes_from_date extends NameAwareFragment{
+    private static final String LOG_TAG = "Dishes_from_date";
+
+    private RecyclerView mRecyclerView_morning;
+    private RecyclerView.Adapter mAdapter_morning;
+    private RecyclerView.LayoutManager mLayoutManager_morning;
+
+    private RecyclerView mRecyclerView_day;
+    private RecyclerView.Adapter mAdapter_day;
+    private RecyclerView.LayoutManager mLayoutManager_day;
+
+    private RecyclerView mRecyclerView_evening;
+    private RecyclerView.Adapter mAdapter_evening;
+    private RecyclerView.LayoutManager mLayoutManager_evening;
+
+    private ArrayList<Item_layout> list_morning = new ArrayList<>();
+    private ArrayList<Item_layout> list_lunch = new ArrayList<>();
+    private ArrayList<Item_layout> list_evening = new ArrayList<>();
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        Log.e(LOG_TAG, "--onCreatedView--");
+        return inflater.inflate(R.layout.fragment_dishes_today, parent, false);
+    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.e(LOG_TAG, "--onViewCreated--");
+        list_morning.clear();
+        list_lunch.clear();
+        list_evening.clear();
+
+        //Gesuchten Tag bekommen
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.setTime(MainActivity.tag);
+        String month;
+        if(calendar.get(java.util.Calendar.MONTH) + 1 < 10)
+        {
+            month ="0"+Integer.toString(calendar.get(java.util.Calendar.MONTH) + 1);
+        }else{
+            month = Integer.toString(calendar.get(java.util.Calendar.MONTH) + 1);
+        }
+        String day = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+
+        MainActivity.main.change_title("Gericht vom :"+ day + "."+month+"."+"2021");
+
+        //API
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(MainActivity.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+        Call<List<Item_wish>> call = jsonPlaceHolderApi.getWish(MainActivity.userID,month,day);
+        call.enqueue(new Callback<List<Item_wish>>() {
+            @Override
+            public void onResponse(Call<List<Item_wish>> call, Response<List<Item_wish>> response) {
+                if(!response.isSuccessful()) {
+                    Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                List<Item_wish> wishes = response.body();
+
+                for(Item_wish wish : wishes){
+                    if(wish.getDaytime().equals("morning")) {
+                        list_morning.add(new Item_layout(wish.getName(),wish.getGroupname()));
+                    }else if(wish.getDaytime().equals("lunch")){
+                        list_lunch.add(new Item_layout(wish.getName(),wish.getGroupname()));
+                    }else if(wish.getDaytime().equals("evening")){
+                        list_evening.add(new Item_layout(wish.getName(),wish.getGroupname()));
+                    }
+                }
+
+
+                //Set up morning Recycler
+                mRecyclerView_morning = view.findViewById(R.id.recycler_morning);
+                mRecyclerView_morning.setHasFixedSize(true);
+                mLayoutManager_morning = new LinearLayoutManager(view.getContext());
+                mAdapter_morning = new RecylerAdapter(list_morning);
+
+                mRecyclerView_morning.setLayoutManager(mLayoutManager_morning);
+                mRecyclerView_morning.setAdapter(mAdapter_morning);
+
+                //Set up day Recycler
+                mRecyclerView_day = view.findViewById(R.id.recycler_day);
+                mRecyclerView_day.setHasFixedSize(true);
+                mLayoutManager_day = new LinearLayoutManager(view.getContext());
+                mAdapter_day = new RecylerAdapter(list_lunch);
+
+                mRecyclerView_day.setLayoutManager(mLayoutManager_day);
+                mRecyclerView_day.setAdapter(mAdapter_day);
+
+                //Set up evening Recycler
+                mRecyclerView_evening = view.findViewById(R.id.recycler_evening);
+                mRecyclerView_evening.setHasFixedSize(true);
+                mLayoutManager_evening = new LinearLayoutManager(view.getContext());
+                mAdapter_evening = new RecylerAdapter(list_evening);
+
+                mRecyclerView_evening.setLayoutManager(mLayoutManager_evening);
+                mRecyclerView_evening.setAdapter(mAdapter_evening);
+            }
+
+            @Override
+            public void onFailure(Call<List<Item_wish>> call, Throwable t) {
+                Log.e(LOG_TAG, t.getMessage());
+            }
+        });
+    }
+}
