@@ -48,6 +48,7 @@ public class User extends NameAwareFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
+        MainActivity.main.change_title("Profil von : " + MainActivity.username);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MainActivity.URL)

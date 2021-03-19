@@ -9,14 +9,14 @@
     <ImageView
         android:id="@+id/user_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/user_change"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Bearbeiten" />
 
     <TextView
         android:id="@+id/textView21"
