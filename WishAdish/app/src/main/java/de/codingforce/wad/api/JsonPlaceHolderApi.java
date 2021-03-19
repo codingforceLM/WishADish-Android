@@ -5,12 +5,14 @@ import java.util.List;
 import de.codingforce.wad.item.ItemDish;
 import de.codingforce.wad.item.ItemGroups;
 import de.codingforce.wad.item.ItemIngredient;
+import de.codingforce.wad.item.ItemMessage;
 import de.codingforce.wad.item.ItemShoppinglists;
 import de.codingforce.wad.item.ItemUser;
 import de.codingforce.wad.item.ItemWish;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface JsonPlaceHolderApi {
@@ -44,9 +46,14 @@ public interface JsonPlaceHolderApi {
     @GET("ingrd")
     Call<List<ItemIngredient>> getIngredients(@Header("userID")String userID);
 
+    @POST("ingrd")
+    Call<ItemMessage> createIngredients(@Header("userID")String userID, @Header("name")String name);
+
+
     //group
     @GET("group")
     Call<List<ItemGroups>> getGroups(@Header("userID")String userID);
+
 
     @GET("group/{groupID}")
     Call<ItemGroups> getGroup(@Path("groupID")String groupID);

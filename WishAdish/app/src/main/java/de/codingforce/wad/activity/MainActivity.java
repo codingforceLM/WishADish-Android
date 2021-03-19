@@ -11,6 +11,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
@@ -29,16 +31,22 @@ import de.codingforce.wad.fragment.OnManualDetachListener;
 import de.codingforce.wad.fragment.LandingPage;
 import de.codingforce.wad.fragment.Shoppinglists;
 import de.codingforce.wad.fragment.Ingredients;
+import de.codingforce.wad.fragment.add.AddIngredient;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "MainActivity";
+
+    private static final  String Ingredients = "de.codingforce.wad.fragment.Ingredients";
+    private static final  String Dishes = "de.codingforce.wad.fragment.Dishes";
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
 
     private ActionBarDrawerToggle drawerToggle;
+    private String currentTab;
+    private String currentFragment = "";
 
     public static MainActivity main;
 
@@ -62,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // This will display an Up icon (<-), we will replace it with hamburger later
+        // This will display an Up icon (<-)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Find our drawer view
@@ -85,10 +93,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
-        switch (item.getItemId()) {
+       switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
                 return true;
+           case R.id.ma_action_add :
+               if(currentFragment.equals(Ingredients)) {
+                   Class AddIngr = AddIngredient.class;
+                   placeFragment(AddIngr, R.id.mainFrame);
+               }
         }
 
         return super.onOptionsItemSelected(item);
@@ -101,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void placeFragment(Class fragmentClass, int frameId) {
         Log.e(LOG_TAG, "--placeFragment--");
+        currentFragment = fragmentClass.getName();
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -235,8 +250,40 @@ public class MainActivity extends AppCompatActivity {
         // Close the navigation drawer
         mDrawer.closeDrawers();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
 
+        int m = -1;
+        switch (currentFragment) {
+            case  Ingredients:
+            case Dishes:
+                m = R.menu.add_menu;
+                break;
+            default :
+                break;
+        }
+        if (m >= 0) {
+            inflater.inflate(m, menu);
+        } else {
+            menu.clear();
+        }
+
+        return true;
+    }
+    /**
+     * Sets Titel
+     * @param titel
+     */
     public void change_title(String titel){
         setTitle(titel);
+    }
+
+    /**
+     * Sets current tab
+     * @param tab tab
+     */
+    public void setCurrentTab(String tab) {
+        this.currentTab = tab;
     }
 }

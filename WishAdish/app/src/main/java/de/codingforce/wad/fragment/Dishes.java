@@ -37,6 +37,7 @@ public class Dishes extends NameAwareFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         Log.e(LOG_TAG, "--onCreatedView--");
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_dishes, parent, false);
     }
 

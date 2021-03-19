@@ -3,10 +3,13 @@ package de.codingforce.wad.fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +35,8 @@ public class Ingredients extends NameAwareFragment{
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private boolean set_button = false;
+
     ArrayList<ItemLayout> list = new ArrayList<>();
 
     @Override
@@ -43,7 +48,10 @@ public class Ingredients extends NameAwareFragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
         Log.e(LOG_TAG, "--onViewCreated--");
+
+        list.clear();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MainActivity.URL)
