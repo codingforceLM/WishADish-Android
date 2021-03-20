@@ -12,6 +12,7 @@ import android.widget.Toast;
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
+import de.codingforce.wad.fragment.Groups;
 import de.codingforce.wad.fragment.Ingredients;
 import de.codingforce.wad.fragment.NameAwareFragment;
 import de.codingforce.wad.item.ItemMessage;
@@ -21,9 +22,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AddIngredient extends NameAwareFragment {
-
-    private static final String LOG_TAG = "Add Ingredient";
+public class AddGroup extends NameAwareFragment {
+    private static final String LOG_TAG = "Add Group";
     private Button button;
     private EditText editText;
 
@@ -31,19 +31,19 @@ public class AddIngredient extends NameAwareFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         Log.e(LOG_TAG, "--onCreatedView--");
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_add_ingr, parent, false);
+        return inflater.inflate(R.layout.fragment_add_group, parent, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
-        MainActivity.main.change_title("Zutat erstellen");
+        MainActivity.main.change_title("Gruppe erstellen");
 
-        button = view.findViewById(R.id.add_ingr_button);
-        button.setOnClickListener(new AddIngredient.ButtonListener());
+        button = view.findViewById(R.id.add_group_button);
+        button.setOnClickListener(new AddGroup.ButtonListener());
 
-        editText = view.findViewById(R.id.ingr_Name);
+        editText = view.findViewById(R.id.group_Name);
 
     }
 
@@ -55,7 +55,7 @@ public class AddIngredient extends NameAwareFragment {
                 Toast toast = Toast.makeText(v.getContext(), "Bitte Name eingeben", Toast.LENGTH_SHORT);
                 toast.show();
                 return;
-                }
+            }
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(MainActivity.URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -63,7 +63,7 @@ public class AddIngredient extends NameAwareFragment {
 
             JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-            Call<ItemMessage> call = jsonPlaceHolderApi.createIngredients(MainActivity.userID, editText.getText().toString());
+            Call<ItemMessage> call = jsonPlaceHolderApi.createGroup(editText.getText().toString(),MainActivity.userID);
             call.enqueue(new Callback<ItemMessage>() {
                 @Override
                 public void onResponse(Call<ItemMessage> call, Response<ItemMessage> response) {
@@ -77,12 +77,12 @@ public class AddIngredient extends NameAwareFragment {
                         toast.show();
                         return;
                     }
-                    Toast toast = Toast.makeText(v.getContext(), "Zutat : " + editText.getText() + " hinzugefügt", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(v.getContext(), "Gruppe : " + editText.getText() + " erstellt", Toast.LENGTH_SHORT);
                     toast.show();
 
-                    //Ingredients
-                    Class Ingredients = Ingredients.class;
-                    MainActivity.main.placeFragment(Ingredients, R.id.mainFrame);
+                    //Group
+                    Class Groups = de.codingforce.wad.fragment.Groups.class;
+                    MainActivity.main.placeFragment(Groups, R.id.mainFrame);
                 }
 
                 @Override

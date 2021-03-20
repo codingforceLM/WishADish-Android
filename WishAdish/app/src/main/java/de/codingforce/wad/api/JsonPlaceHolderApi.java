@@ -58,6 +58,9 @@ public interface JsonPlaceHolderApi {
     @GET("group")
     Call<List<ItemGroups>> getGroups(@Header("userID")String userID);
 
+    @POST("group")
+    Call<ItemMessage> createGroup(@Header("name") String name,@Header("userId")String userID);
+
 
     @GET("group/{groupID}")
     Call<ItemGroups> getGroup(@Path("groupID")String groupID);

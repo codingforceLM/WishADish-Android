@@ -31,6 +31,7 @@ import de.codingforce.wad.fragment.OnManualDetachListener;
 import de.codingforce.wad.fragment.LandingPage;
 import de.codingforce.wad.fragment.Shoppinglists;
 import de.codingforce.wad.fragment.Ingredients;
+import de.codingforce.wad.fragment.add.AddGroup;
 import de.codingforce.wad.fragment.add.AddIngredient;
 import de.codingforce.wad.fragment.add.CreateDish;
 
@@ -38,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "MainActivity";
 
-    private static final  String Ingredients = "de.codingforce.wad.fragment.Ingredients";
-    private static final  String Dishes = "de.codingforce.wad.fragment.Dishes";
+    private final  String Ingredients = "de.codingforce.wad.fragment.Ingredients";
+    private final  String Dishes = "de.codingforce.wad.fragment.Dishes";
+    private final  String Groupes = "de.codingforce.wad.fragment.Groups";
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -249,6 +251,9 @@ public class MainActivity extends AppCompatActivity {
                 }else if(currentFragment.equals(Dishes)){
                     Class CreateDish = CreateDish.class;
                     placeFragment(CreateDish, R.id.mainFrame);
+                }else if(currentFragment.equals(Groupes)){
+                    Class AddGroup = AddGroup.class;
+                    placeFragment(AddGroup, R.id.mainFrame);
                 }
         }
 
@@ -263,6 +268,7 @@ public class MainActivity extends AppCompatActivity {
         switch (currentFragment) {
             case  Ingredients:
             case Dishes:
+            case Groupes:
                 m = R.menu.add_menu;
                 break;
             default :
