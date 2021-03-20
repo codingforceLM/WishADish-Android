@@ -1,4 +1,4 @@
-package de.codingforce.wad.fragment;
+package de.codingforce.wad.fragment.add;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,13 +13,33 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.codeingforce.wad.R;
+import de.codingforce.wad.activity.MainActivity;
+import de.codingforce.wad.api.JsonPlaceHolderApi;
+import de.codingforce.wad.fragment.Dishes;
+import de.codingforce.wad.fragment.Ingredients;
+import de.codingforce.wad.fragment.NameAwareFragment;
+import de.codingforce.wad.item.ItemDishIngredients;
+import de.codingforce.wad.item.ItemGroups;
+import de.codingforce.wad.item.ItemIngredient;
 import de.codingforce.wad.item.ItemIngredients;
+import de.codingforce.wad.item.ItemMessage;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateDish extends NameAwareFragment {
     private static final String LOG_TAG = "CreatDishes";
@@ -36,6 +56,8 @@ public class CreateDish extends NameAwareFragment {
     //Ingredientslist
     private ArrayList<ItemIngredients> ingredients_list = new ArrayList<>();
 
+    private List<ItemIngredient>ingr_list;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -51,23 +73,46 @@ public class CreateDish extends NameAwareFragment {
         //add Layout
         layout_list= view.findViewById(R.id.layout_list);
 
-
         //dish name
         dish_name = view.findViewById(R.id.dish_name_plainText);
 
         //get Data
         ingredients = new ArrayList<>();
+        ingredients.clear();
         ingredients.add("Zutat auswählen");
-        ingredients.add("ing A");
-        ingredients.add("ing B");
-        ingredients.add("ing C");
-        ingredients.add("ing D");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(MainActivity.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+        Call<List<ItemIngredient>> call = jsonPlaceHolderApi.getIngredients(MainActivity.userID);
+        call.enqueue(new Callback<List<ItemIngredient>>() {
+            @Override
+            public void onResponse(Call<List<ItemIngredient>> call, Response<List<ItemIngredient>> response) {
+                if(!response.isSuccessful()) {
+                    Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                ingr_list = response.body();
+                for(ItemIngredient ingr : ingr_list){
+                    ingredients.add(ingr.getName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ItemIngredient>> call, Throwable t) {
+                Log.e(LOG_TAG, t.getMessage());
+            }
+        });
 
         units = new ArrayList<>();
         units.add("Einheit auswählen");
         units.add("kg");
         units.add("l");
-        units.add("stück");
 
         //Action Button
         more_ing = view.findViewById(R.id.more_ingredients);
@@ -87,13 +132,58 @@ public class CreateDish extends NameAwareFragment {
 
             if(checkIfValidAndRead())
             {
-                //get Name
-                Log.e(LOG_TAG, dish_name.getText().toString());
-
+                JsonArray ingrArray = new JsonArray();
                 for(ItemIngredients i : ingredients_list)
                 {
-                    Log.e(LOG_TAG, "Ingredients :" + i.getIngredient() + "Amount :"+ i.getAmount() +"Unit :" + i.getUnit());
+                    JsonObject ingr_Json = new JsonObject();
+                    String ingrID=null;
+                    for(ItemIngredient ingr :ingr_list){
+                        if(ingr.getName().equals(i.getIngredient())){
+                            ingrID = ingr.getId();
+                            break;
+                        }
+                    }
+                    ingr_Json.addProperty("id",ingrID);
+                    ingr_Json.addProperty("amount",i.getAmount());
+                    ingr_Json.addProperty("unit",i.getUnit());
+
+                    ingrArray.add(ingr_Json);
                 }
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(MainActivity.URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+                Call<ItemMessage> call = jsonPlaceHolderApi.createDish(MainActivity.userID,dish_name.getText().toString(),new Gson().toJson(ingrArray));
+                call.enqueue(new Callback<ItemMessage>() {
+                    @Override
+                    public void onResponse(Call<ItemMessage> call, Response<ItemMessage> response) {
+                        if (!response.isSuccessful()) {
+                            Toast toast = Toast.makeText(v.getContext(), "Code " + response.code() + " : " +response.message(), Toast.LENGTH_SHORT);
+                            toast.show();
+                            return;
+                        }
+                        if (response.code() != 200) {
+                            Toast toast = Toast.makeText(v.getContext(), "Fehler " + response.code() + "daten konnten nicht gespeichert werden", Toast.LENGTH_SHORT);
+                            toast.show();
+                            return;
+                        }
+                        ItemMessage message = response.body();
+                        Toast toast = Toast.makeText(v.getContext(), message.getMsg(), Toast.LENGTH_SHORT);
+                        toast.show();
+
+                        //Ingredients
+                        Class Dishes = de.codingforce.wad.fragment.Dishes.class;
+                        MainActivity.main.placeFragment(Dishes, R.id.mainFrame);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ItemMessage> call, Throwable t) {
+                        Log.e(LOG_TAG, t.getMessage());
+                    }
+                });
             }
         }
     }

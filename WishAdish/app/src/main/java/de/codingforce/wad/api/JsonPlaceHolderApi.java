@@ -3,6 +3,7 @@ package de.codingforce.wad.api;
 import java.util.List;
 
 import de.codingforce.wad.item.ItemDish;
+import de.codingforce.wad.item.ItemDishIngredients;
 import de.codingforce.wad.item.ItemGroups;
 import de.codingforce.wad.item.ItemIngredient;
 import de.codingforce.wad.item.ItemMessage;
@@ -40,6 +41,9 @@ public interface JsonPlaceHolderApi {
 
     @GET("dish/{dishID}")
     Call<ItemDish> getDish(@Path("dishID")String dishID);
+
+    @POST("dish")
+    Call<ItemMessage> createDish(@Header("userId")String userID, @Header("name") String name, @Header("ingredients")String ingredients);
 
 
     //Ingredients

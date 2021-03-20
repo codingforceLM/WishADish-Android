@@ -32,6 +32,7 @@ import de.codingforce.wad.fragment.LandingPage;
 import de.codingforce.wad.fragment.Shoppinglists;
 import de.codingforce.wad.fragment.Ingredients;
 import de.codingforce.wad.fragment.add.AddIngredient;
+import de.codingforce.wad.fragment.add.CreateDish;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -88,23 +89,6 @@ public class MainActivity extends AppCompatActivity {
         Class Login = Login.class;
         placeFragment(Login, R.id.mainFrame);
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-       switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawer.openDrawer(GravityCompat.START);
-                return true;
-           case R.id.ma_action_add :
-               if(currentFragment.equals(Ingredients)) {
-                   Class AddIngr = AddIngredient.class;
-                   placeFragment(AddIngr, R.id.mainFrame);
-               }
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -250,6 +234,27 @@ public class MainActivity extends AppCompatActivity {
         // Close the navigation drawer
         mDrawer.closeDrawers();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawer.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.ma_action_add :
+                if(currentFragment.equals(Ingredients)) {
+                    Class AddIngr = AddIngredient.class;
+                    placeFragment(AddIngr, R.id.mainFrame);
+                }else if(currentFragment.equals(Dishes)){
+                    Class CreateDish = CreateDish.class;
+                    placeFragment(CreateDish, R.id.mainFrame);
+                }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -268,7 +273,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             menu.clear();
         }
-
         return true;
     }
     /**

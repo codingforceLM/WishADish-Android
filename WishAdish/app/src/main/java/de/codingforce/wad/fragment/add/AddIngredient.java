@@ -6,23 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.fragment.app.FragmentManager;
-
-import java.util.List;
 
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
-import de.codingforce.wad.fragment.CreateDish;
 import de.codingforce.wad.fragment.Ingredients;
-import de.codingforce.wad.fragment.Login;
 import de.codingforce.wad.fragment.NameAwareFragment;
-import de.codingforce.wad.item.ItemIngredient;
-import de.codingforce.wad.item.ItemIngredients;
 import de.codingforce.wad.item.ItemMessage;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -86,10 +77,10 @@ public class AddIngredient extends NameAwareFragment {
                         toast.show();
                         return;
                     }
-                    Toast toast = Toast.makeText(v.getContext(), response.code() + " worked", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(v.getContext(), "Zutat : " + editText.getText() + " hinzugefügt", Toast.LENGTH_SHORT);
                     toast.show();
 
-                    //Login
+                    //Ingredients
                     Class Ingredients = Ingredients.class;
                     MainActivity.main.placeFragment(Ingredients, R.id.mainFrame);
                 }
