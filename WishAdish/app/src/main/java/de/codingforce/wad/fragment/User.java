@@ -73,10 +73,14 @@ public class User extends NameAwareFragment {
                 textBorn = view.findViewById(R.id.user_date);
                 textEmail = view.findViewById(R.id.user_email);
 
-                // show The Image in a ImageView
-                new DownloadImageTask((ImageView) view.findViewById(R.id.user_image))
-                        .execute(user.getFileurl());
-
+                if(!user.getFileurl().equals("")) {
+                    // show The Image in a ImageView
+                    new DownloadImageTask((ImageView) view.findViewById(R.id.user_image))
+                            .execute(user.getFileurl());
+                }else {
+                    new DownloadImageTask((ImageView) view.findViewById(R.id.user_image))
+                            .execute("https://supporthubstaffcom.lightningbasecdn.com/wp-content/uploads/2019/08/good-pic.png");
+                }
 
                 textName.setText(user.getFirstname() + " " + user.getLastname());
                 textBorn.setText(user.getBirthdate());
