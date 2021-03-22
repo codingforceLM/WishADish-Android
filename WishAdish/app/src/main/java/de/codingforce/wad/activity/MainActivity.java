@@ -33,6 +33,7 @@ import de.codingforce.wad.fragment.Shoppinglists;
 import de.codingforce.wad.fragment.Ingredients;
 import de.codingforce.wad.fragment.add.AddGroup;
 import de.codingforce.wad.fragment.add.AddIngredient;
+import de.codingforce.wad.fragment.add.AddShoppinglist;
 import de.codingforce.wad.fragment.add.CreateDish;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private final  String Ingredients = "de.codingforce.wad.fragment.Ingredients";
     private final  String Dishes = "de.codingforce.wad.fragment.Dishes";
     private final  String Groupes = "de.codingforce.wad.fragment.Groups";
+    private final  String Shoppinglistes = "de.codingforce.wad.fragment.Shoppinglists";
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -254,6 +256,9 @@ public class MainActivity extends AppCompatActivity {
                 }else if(currentFragment.equals(Groupes)){
                     Class AddGroup = AddGroup.class;
                     placeFragment(AddGroup, R.id.mainFrame);
+                }else if(currentFragment.equals(Shoppinglistes)){
+                    Class AddShoppinglist = AddShoppinglist.class;
+                    placeFragment(AddShoppinglist, R.id.mainFrame);
                 }
         }
 
@@ -269,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
             case  Ingredients:
             case Dishes:
             case Groupes:
+            case Shoppinglistes:
                 m = R.menu.add_menu;
                 break;
             default :

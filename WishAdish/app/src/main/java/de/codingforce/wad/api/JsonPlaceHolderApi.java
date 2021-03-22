@@ -24,6 +24,10 @@ public interface JsonPlaceHolderApi {
     @GET("list/{listID}")
     Call<ItemShoppinglists> getShoppinglist(@Path("listID") String listID);
 
+    @POST("list")
+    Call<ItemMessage> createShoppinglist(@Header("name")String name, @Header("groupId") String groupID, @Header("userId") String userID);
+
+
 
     //User
     @GET("user/{username}")
