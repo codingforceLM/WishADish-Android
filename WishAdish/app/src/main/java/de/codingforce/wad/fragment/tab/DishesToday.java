@@ -58,6 +58,10 @@ public class DishesToday extends NameAwareFragment {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
 
+        list_morning.clear();
+        list_lunch.clear();
+        list_evening.clear();
+
         //Heutigen Tag bekommen
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -70,6 +74,7 @@ public class DishesToday extends NameAwareFragment {
             month = Integer.toString(calendar.get(Calendar.MONTH) + 1);
         }
         String day = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+        String year = Integer.toString(calendar.get(Calendar.YEAR));
 
         Log.e(LOG_TAG,"Month"+month);
         //API
@@ -80,7 +85,7 @@ public class DishesToday extends NameAwareFragment {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<ItemWish>> call = jsonPlaceHolderApi.getWish(MainActivity.userID,month,day);
+        Call<List<ItemWish>> call = jsonPlaceHolderApi.getWish(MainActivity.token,MainActivity.userID,month,day,year);
         call.enqueue(new Callback<List<ItemWish>>() {
             @Override
             public void onResponse(Call<List<ItemWish>> call, Response<List<ItemWish>> response) {

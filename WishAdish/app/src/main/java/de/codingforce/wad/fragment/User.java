@@ -57,7 +57,7 @@ public class User extends NameAwareFragment {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<ItemUser> call = jsonPlaceHolderApi.getUser(MainActivity.username);
+        Call<ItemUser> call = jsonPlaceHolderApi.getUser(MainActivity.token,MainActivity.userID);
         call.enqueue(new Callback<ItemUser>() {
             @Override
             public void onResponse(Call<ItemUser> call, Response<ItemUser> response) {

@@ -63,7 +63,7 @@ public class AddIngredient extends NameAwareFragment {
 
             JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-            Call<ItemMessage> call = jsonPlaceHolderApi.createIngredients(MainActivity.userID, editText.getText().toString());
+            Call<ItemMessage> call = jsonPlaceHolderApi.createIngredients(MainActivity.token,MainActivity.userID, editText.getText().toString());
             call.enqueue(new Callback<ItemMessage>() {
                 @Override
                 public void onResponse(Call<ItemMessage> call, Response<ItemMessage> response) {

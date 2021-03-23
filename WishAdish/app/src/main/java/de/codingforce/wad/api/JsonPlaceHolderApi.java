@@ -6,6 +6,7 @@ import de.codingforce.wad.item.ItemDish;
 import de.codingforce.wad.item.ItemDishIngredients;
 import de.codingforce.wad.item.ItemGroups;
 import de.codingforce.wad.item.ItemIngredient;
+import de.codingforce.wad.item.ItemLogin;
 import de.codingforce.wad.item.ItemMessage;
 import de.codingforce.wad.item.ItemShoppinglists;
 import de.codingforce.wad.item.ItemUser;
@@ -19,53 +20,60 @@ import retrofit2.http.Path;
 public interface JsonPlaceHolderApi {
     //Shoppinglist
     @GET("list")
-    Call<List<ItemShoppinglists>> getShoppinglists(@Header("userID") String userID);
+    Call<List<ItemShoppinglists>> getShoppinglists(@Header("Authorization")String token,@Header("userID") String userID);
 
     @GET("list/{listID}")
-    Call<ItemShoppinglists> getShoppinglist(@Path("listID") String listID);
+    Call<ItemShoppinglists> getShoppinglist(@Header("Authorization")String token,@Path("listID") String listID);
 
     @POST("list")
-    Call<ItemMessage> createShoppinglist(@Header("name")String name, @Header("groupId") String groupID, @Header("userId") String userID);
-
+    Call<ItemMessage> createShoppinglist(@Header("Authorization")String token,@Header("name")String name, @Header("groupId") String groupID, @Header("userId") String userID);
 
 
     //User
-    @GET("user/{username}")
-    Call<ItemUser> getUser(@Path("username")String username);
+    @GET("user/{id}")
+    Call<ItemUser> getUser(@Header("Authorization")String token,@Path("id")String id);
 
 
     //Wish
     @GET("wish")
-    Call<List<ItemWish>> getWish(@Header("userID")String userID, @Header("month") String month, @Header("day") String day);
+    Call<List<ItemWish>> getWish(@Header("Authorization")String token,@Header("userID")String userID, @Header("month") String month, @Header("day") String day,@Header("year")String year);
+
+    @POST("wish")
+    Call<ItemMessage> createWish(@Header("Authorization")String token,@Header("userId")String userID,@Header("groupId")String groupID,@Header("dishId")String dishID,@Header("daytime")String daytime,@Header("date")String date);
 
 
     //dishes
     @GET("dish")
-    Call<List<ItemDish>> getDishes(@Header("userID")String userID);
+    Call<List<ItemDish>> getDishes(@Header("Authorization")String token,@Header("userID")String userID);
 
     @GET("dish/{dishID}")
-    Call<ItemDish> getDish(@Path("dishID")String dishID);
+    Call<ItemDish> getDish(@Header("Authorization")String token,@Path("dishID")String dishID);
 
     @POST("dish")
-    Call<ItemMessage> createDish(@Header("userId")String userID, @Header("name") String name, @Header("ingredients")String ingredients);
+    Call<ItemMessage> createDish(@Header("Authorization")String token,@Header("userId")String userID, @Header("name") String name, @Header("ingredients")String ingredients);
 
 
     //Ingredients
     @GET("ingrd")
-    Call<List<ItemIngredient>> getIngredients(@Header("userID")String userID);
+    Call<List<ItemIngredient>> getIngredients(@Header("Authorization")String token,@Header("userID")String userID);
 
     @POST("ingrd")
-    Call<ItemMessage> createIngredients(@Header("userID")String userID, @Header("name")String name);
+    Call<ItemMessage> createIngredients(@Header("Authorization")String token,@Header("userID")String userID, @Header("name")String name);
 
 
     //group
     @GET("group")
-    Call<List<ItemGroups>> getGroups(@Header("userID")String userID);
+    Call<List<ItemGroups>> getGroups(@Header("Authorization")String token,@Header("userID")String userID);
 
     @POST("group")
-    Call<ItemMessage> createGroup(@Header("name") String name,@Header("userId")String userID);
+    Call<ItemMessage> createGroup(@Header("Authorization")String token,@Header("name") String name,@Header("userId")String userID);
 
 
     @GET("group/{groupID}")
-    Call<ItemGroups> getGroup(@Path("groupID")String groupID);
+    Call<ItemGroups> getGroup(@Header("Authorization")String token,@Path("groupID")String groupID);
+
+
+    //login
+    @POST("login")
+    Call<ItemLogin> createLogin(@Header("email")String email, @Header("password")String password);
 }

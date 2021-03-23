@@ -54,7 +54,7 @@ public class Groups extends NameAwareFragment{
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<ItemGroups>> call = jsonPlaceHolderApi.getGroups(MainActivity.userID);
+        Call<List<ItemGroups>> call = jsonPlaceHolderApi.getGroups(MainActivity.token,MainActivity.userID);
         call.enqueue(new Callback<List<ItemGroups>>() {
             @Override
             public void onResponse(Call<List<ItemGroups>> call, Response<List<ItemGroups>> response) {

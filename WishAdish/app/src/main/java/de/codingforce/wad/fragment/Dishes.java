@@ -55,7 +55,7 @@ public class Dishes extends NameAwareFragment {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<ItemDish>> call = jsonPlaceHolderApi.getDishes(MainActivity.userID);
+        Call<List<ItemDish>> call = jsonPlaceHolderApi.getDishes(MainActivity.token,MainActivity.userID);
         call.enqueue(new Callback<List<ItemDish>>() {
             @Override
             public void onResponse(Call<List<ItemDish>> call, Response<List<ItemDish>> response) {

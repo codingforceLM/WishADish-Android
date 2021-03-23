@@ -53,7 +53,7 @@ public class Dish extends NameAwareFragment{
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<ItemDish> call = jsonPlaceHolderApi.getDish(MainActivity.dishID);
+        Call<ItemDish> call = jsonPlaceHolderApi.getDish(MainActivity.token,MainActivity.dishID);
         call.enqueue(new Callback<ItemDish>() {
             @Override
             public void onResponse(Call<ItemDish> call, Response<ItemDish> response) {

@@ -63,7 +63,7 @@ public class AddGroup extends NameAwareFragment {
 
             JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-            Call<ItemMessage> call = jsonPlaceHolderApi.createGroup(editText.getText().toString(),MainActivity.userID);
+            Call<ItemMessage> call = jsonPlaceHolderApi.createGroup(MainActivity.token,editText.getText().toString(),MainActivity.userID);
             call.enqueue(new Callback<ItemMessage>() {
                 @Override
                 public void onResponse(Call<ItemMessage> call, Response<ItemMessage> response) {

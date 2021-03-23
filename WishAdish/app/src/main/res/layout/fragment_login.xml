@@ -35,16 +35,16 @@
         android:id="@+id/textView17"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/username" />
+        android:text="Email" />
 
     <EditText
-        android:id="@+id/login_username"
+        android:id="@+id/login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/username" />
+        android:text="loki@asgard.com" />
 
     <TextView
         android:id="@+id/textView18"
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/passwort" />
+        android:text="lodpw" />
 
     <Button
         android:id="@+id/Login_button"

@@ -48,6 +48,7 @@ public class WishesFromDate extends NameAwareFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         Log.e(LOG_TAG, "--onCreatedView--");
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_dishes_today, parent, false);
     }
     @Override
@@ -69,8 +70,9 @@ public class WishesFromDate extends NameAwareFragment{
             month = Integer.toString(calendar.get(java.util.Calendar.MONTH) + 1);
         }
         String day = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+        String year = Integer.toString(calendar.get(Calendar.YEAR)- 1900);
 
-        MainActivity.main.change_title("Wünsche für :"+ day + "."+month+"."+"2021");
+        MainActivity.main.change_title("Wünsche für :"+ day + "."+month+"."+year);
 
         //API
         Retrofit retrofit = new Retrofit.Builder()
@@ -80,7 +82,7 @@ public class WishesFromDate extends NameAwareFragment{
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<ItemWish>> call = jsonPlaceHolderApi.getWish(MainActivity.userID,month,day);
+        Call<List<ItemWish>> call = jsonPlaceHolderApi.getWish(MainActivity.token,MainActivity.userID,month,day,year);
         call.enqueue(new Callback<List<ItemWish>>() {
             @Override
             public void onResponse(Call<List<ItemWish>> call, Response<List<ItemWish>> response) {

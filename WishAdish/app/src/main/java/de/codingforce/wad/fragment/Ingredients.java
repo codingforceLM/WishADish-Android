@@ -60,7 +60,7 @@ public class Ingredients extends NameAwareFragment{
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<ItemIngredient>> call = jsonPlaceHolderApi.getIngredients(MainActivity.userID);
+        Call<List<ItemIngredient>> call = jsonPlaceHolderApi.getIngredients(MainActivity.token,MainActivity.userID);
         call.enqueue(new Callback<List<ItemIngredient>>() {
             @Override
             public void onResponse(Call<List<ItemIngredient>> call, Response<List<ItemIngredient>> response) {

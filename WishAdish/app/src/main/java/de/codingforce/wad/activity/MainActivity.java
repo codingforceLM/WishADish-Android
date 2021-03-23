@@ -31,9 +31,11 @@ import de.codingforce.wad.fragment.OnManualDetachListener;
 import de.codingforce.wad.fragment.LandingPage;
 import de.codingforce.wad.fragment.Shoppinglists;
 import de.codingforce.wad.fragment.Ingredients;
+import de.codingforce.wad.fragment.WishesFromDate;
 import de.codingforce.wad.fragment.add.AddGroup;
 import de.codingforce.wad.fragment.add.AddIngredient;
 import de.codingforce.wad.fragment.add.AddShoppinglist;
+import de.codingforce.wad.fragment.add.CreatWish;
 import de.codingforce.wad.fragment.add.CreateDish;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private final  String Dishes = "de.codingforce.wad.fragment.Dishes";
     private final  String Groupes = "de.codingforce.wad.fragment.Groups";
     private final  String Shoppinglistes = "de.codingforce.wad.fragment.Shoppinglists";
+    private final  String WishFromDate = "de.codingforce.wad.fragment.WishesFromDate";
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static MainActivity main;
 
+    public static String token;
     public static String username;
     public static final String URL = "http://10.0.2.2:3000/api/";
     public static String userID;
@@ -259,6 +263,9 @@ public class MainActivity extends AppCompatActivity {
                 }else if(currentFragment.equals(Shoppinglistes)){
                     Class AddShoppinglist = AddShoppinglist.class;
                     placeFragment(AddShoppinglist, R.id.mainFrame);
+                }else if(currentFragment.equals(WishFromDate)){
+                    Class CreateWish = CreatWish.class;
+                    placeFragment(CreateWish, R.id.mainFrame);
                 }
         }
 
@@ -275,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
             case Dishes:
             case Groupes:
             case Shoppinglistes:
+            case WishFromDate:
                 m = R.menu.add_menu;
                 break;
             default :
