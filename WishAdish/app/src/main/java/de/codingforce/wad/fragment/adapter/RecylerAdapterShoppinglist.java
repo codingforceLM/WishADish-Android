@@ -29,7 +29,6 @@ public class RecylerAdapterShoppinglist extends RecyclerView.Adapter<RecylerAdap
             mTextView1 = itemView.findViewById(R.id.item_1_ingredients);
             mTextView2 = itemView.findViewById(R.id.item_2_ingredients);
             checkBox = itemView.findViewById(R.id.ingredients_checkbox);
-
         }
     }
 
@@ -56,9 +55,12 @@ public class RecylerAdapterShoppinglist extends RecyclerView.Adapter<RecylerAdap
         holder.mTextView2.setText(currentItemlayout.getmText2());
         holder.checkBox.setChecked(currentItemlayout.isDone());
     }
-
     @Override
     public int getItemCount() {
         return mlist.size();
+    }
+
+    public ItemLayoutIngredients getItem(int position) {
+        return mlist.get(position);
     }
 }

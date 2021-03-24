@@ -50,6 +50,7 @@ public class Ingredients extends NameAwareFragment{
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
         Log.e(LOG_TAG, "--onViewCreated--");
+        MainActivity.main.change_title("Zutaten");
 
         list.clear();
 

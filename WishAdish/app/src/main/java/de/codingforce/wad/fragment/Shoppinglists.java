@@ -45,6 +45,7 @@ public class Shoppinglists extends NameAwareFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
+        MainActivity.main.change_title("Einkaufslisten");
 
         list.clear();
 

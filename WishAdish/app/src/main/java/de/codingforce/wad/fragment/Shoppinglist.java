@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,8 +29,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Shoppinglist extends NameAwareFragment{
     private static final String LOG_TAG = "Shoppinglist";
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecylerAdapterShoppinglist mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Button saveButton;
 
     ArrayList<ItemLayoutIngredients> ingredients = new ArrayList<>();
 
@@ -43,6 +45,8 @@ public class Shoppinglist extends NameAwareFragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Log.e(LOG_TAG, "--onViewCreated--");
         MainActivity.main.change_title(MainActivity.shoppinglistName);
+
+        ingredients.clear();
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -80,6 +84,10 @@ public class Shoppinglist extends NameAwareFragment{
 
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
+
+                //Buttons
+                saveButton = view.findViewById(R.id.shoppinglist_save);
+                saveButton.setOnClickListener(new Shoppinglist.ButtonListener());
             }
 
             @Override
@@ -87,5 +95,17 @@ public class Shoppinglist extends NameAwareFragment{
                 Log.e(LOG_TAG, t.getMessage());
             }
         });
+    }
+    private class ButtonListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Log.e(LOG_TAG,"Button Clicked");
+            for(int i = 0; i < mAdapter.getItemCount(); i++) {
+                /*if(mAdapter.getItem(i).isDone() != ingredients.get(i).isDone()) {
+                    Log.e(LOG_TAG, mAdapter.getItem(i).getmText1());
+                }*/
+                Log.e(LOG_TAG, mAdapter.getItem(i).getmText1() + "BOOLEAN :");
+            }
+        }
     }
 }

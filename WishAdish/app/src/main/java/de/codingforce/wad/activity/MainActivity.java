@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private final  String Groupes = "de.codingforce.wad.fragment.Groups";
     private final  String Shoppinglistes = "de.codingforce.wad.fragment.Shoppinglists";
     private final  String WishFromDate = "de.codingforce.wad.fragment.WishesFromDate";
+    private final  String Login = "de.codingforce.wad.fragment.Login";
+    private final  String Register = "de.codingforce.wad.fragment.add.Register";
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // This will display an Up icon (<-)
+        /*// This will display an Up icon (<-)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Find our drawer view
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
-        setupDrawerContent(nvDrawer);
+        setupDrawerContent(nvDrawer);*/
 
         main = this;
 
@@ -221,6 +223,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_user:
                 fragmentClass = User.class;
                 break;
+            case R.id.nav_logout:
+                resetStatics();
+                fragmentClass = Login.class;
+                break;
             default:
                 fragmentClass = LandingPage.class;
         }
@@ -274,6 +280,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if(!currentFragment.equals(Login) && !currentFragment.equals(Register)){
+            // This will display an Up icon (<-)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+           // Find our drawer view
+            mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+            // ...From section above...
+            // Find our drawer view
+            nvDrawer = (NavigationView) findViewById(R.id.nvView);
+            // Setup drawer view
+            setupDrawerContent(nvDrawer);
+        }
+        else{
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
         MenuInflater inflater = getMenuInflater();
 
         int m = -1;
@@ -309,5 +331,26 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setCurrentTab(String tab) {
         this.currentTab = tab;
+    }
+
+    private void resetStatics(){
+        token = null;
+        username= null;
+        userID= null;
+        shoppinglistID= null;
+        shoppinglistName= null;
+        tag= null;
+        dishID= null;
+        dishName= null;
+        groupID= null;
+        groupName= null;
+    }
+
+    private void clearBackStack() {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
+            manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
     }
 }

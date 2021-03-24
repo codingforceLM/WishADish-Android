@@ -30,6 +30,7 @@ public class Login extends NameAwareFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         MainActivity.main.change_title("Login");
+        setHasOptionsMenu(true);
         Log.e(LOG_TAG, "--onCreatedView--");
         return inflater.inflate(R.layout.fragment_login, parent, false);
     }
@@ -37,6 +38,7 @@ public class Login extends NameAwareFragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Log.e(LOG_TAG, "--onViewCreated--");
+        MainActivity.main.change_title("WishaDish");
 
         username = view.findViewById(R.id.login_email);
         password = view.findViewById(R.id.login_passwort);

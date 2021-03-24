@@ -31,6 +31,7 @@ public class Calendar extends NameAwareFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
+        MainActivity.main.change_title("Kalender");
 
         calendarView = view.findViewById(R.id.calendarView2);
 
