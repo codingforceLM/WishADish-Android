@@ -74,7 +74,6 @@ public class Shoppinglists extends NameAwareFragment {
                 for(ItemShoppinglists shopping_list : shoppinglists)
                 {
                     list.add(new ItemLayout(shopping_list.getName(),shopping_list.getId()));
-                    Log.e(LOG_TAG,shopping_list.getId() + shopping_list.getName());
                 }
                 //Set up Recycler
                 mRecyclerView = view.findViewById(R.id.RecylerView_Shoppinglists);

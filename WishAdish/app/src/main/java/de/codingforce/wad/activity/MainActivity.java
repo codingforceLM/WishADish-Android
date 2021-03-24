@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -274,7 +275,6 @@ public class MainActivity extends AppCompatActivity {
                     placeFragment(CreateWish, R.id.mainFrame);
                 }
         }
-
         return super.onOptionsItemSelected(item);
     }
 

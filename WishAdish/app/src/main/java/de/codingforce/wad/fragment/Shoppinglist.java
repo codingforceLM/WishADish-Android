@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +35,7 @@ public class Shoppinglist extends NameAwareFragment{
     private Button saveButton;
 
     ArrayList<ItemLayoutIngredients> ingredients = new ArrayList<>();
+    ArrayList<ItemLayoutIngredients> ingredientsChecked = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class Shoppinglist extends NameAwareFragment{
         MainActivity.main.change_title(MainActivity.shoppinglistName);
 
         ingredients.clear();
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -99,13 +102,26 @@ public class Shoppinglist extends NameAwareFragment{
     private class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            ingredientsChecked.clear();
             Log.e(LOG_TAG,"Button Clicked");
-            for(int i = 0; i < mAdapter.getItemCount(); i++) {
-                /*if(mAdapter.getItem(i).isDone() != ingredients.get(i).isDone()) {
-                    Log.e(LOG_TAG, mAdapter.getItem(i).getmText1());
-                }*/
-                Log.e(LOG_TAG, mAdapter.getItem(i).getmText1() + "BOOLEAN :");
+            ArrayList<Boolean> booleanlist = mAdapter.isCheckedList();
+            for(int i = 0;i < ingredients.size();i++){
+                try {
+                    if (booleanlist.get(i) != ingredients.get(i).isDone()) {
+                        ingredientsChecked.add(ingredients.get(i));
+                    }
+                }
+                catch (IndexOutOfBoundsException iobe){
+                }
             }
+
+            for(ItemLayoutIngredients ingr : ingredientsChecked){
+                Log.e(LOG_TAG,"Name :" + ingr.getmText1());
+            }
+
+            //Shoppinglist
+            Class Shoppinglists = Shoppinglists.class;
+            MainActivity.main.placeFragment(Shoppinglists, R.id.mainFrame);
         }
     }
 }

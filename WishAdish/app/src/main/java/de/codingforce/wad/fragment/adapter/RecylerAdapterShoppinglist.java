@@ -1,5 +1,6 @@
 package de.codingforce.wad.fragment.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import de.codingforce.wad.item.layouts.ItemLayoutIngredients;
 
 public class RecylerAdapterShoppinglist extends RecyclerView.Adapter<RecylerAdapterShoppinglist.RecylerViewHolder> {
     private ArrayList<ItemLayoutIngredients> mlist;
+    ArrayList<RecylerViewHolder> myViewHolders = new ArrayList<>();
 
     public static class RecylerViewHolder extends RecyclerView.ViewHolder
     {
@@ -54,6 +56,8 @@ public class RecylerAdapterShoppinglist extends RecyclerView.Adapter<RecylerAdap
         holder.mTextView1.setText(currentItemlayout.getmText1());
         holder.mTextView2.setText(currentItemlayout.getmText2());
         holder.checkBox.setChecked(currentItemlayout.isDone());
+
+        myViewHolders.add(holder);
     }
     @Override
     public int getItemCount() {
@@ -62,5 +66,14 @@ public class RecylerAdapterShoppinglist extends RecyclerView.Adapter<RecylerAdap
 
     public ItemLayoutIngredients getItem(int position) {
         return mlist.get(position);
+    }
+
+    public ArrayList<Boolean> isCheckedList()
+    {
+        ArrayList<Boolean> bool = new ArrayList<>();
+        for(RecylerViewHolder rvh : myViewHolders) {
+            bool.add(rvh.checkBox.isChecked());
+        }
+        return bool;
     }
 }
