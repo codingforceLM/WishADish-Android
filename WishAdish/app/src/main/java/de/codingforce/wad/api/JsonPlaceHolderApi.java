@@ -33,6 +33,11 @@ public interface JsonPlaceHolderApi {
     @GET("user/{id}")
     Call<ItemUser> getUser(@Header("Authorization")String token,@Path("id")String id);
 
+    @POST("user")
+    Call<ItemMessage> createUser(@Header("firstname")String firstname,@Header("lastname")String lastname,@Header("username")String username,@Header("email")String email
+    ,@Header("password")String password,@Header("birthday")String birthday);
+
+
 
     //Wish
     @GET("wish")

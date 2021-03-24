@@ -12,6 +12,7 @@ import android.widget.Toast;
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
+import de.codingforce.wad.fragment.add.Register;
 import de.codingforce.wad.item.ItemLogin;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +25,7 @@ public class Login extends NameAwareFragment{
     private EditText username;
     private EditText password;
     private Button button;
+    private Button signUp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class Login extends NameAwareFragment{
 
         button = view.findViewById(R.id.Login_button);
         button.setOnClickListener(new Login.ButtonListener());
+
+        signUp = view.findViewById(R.id.signUp_button);
+        signUp.setOnClickListener(new Login.ButtonListenerSignUp());
     }
 
     private class ButtonListener implements View.OnClickListener {
@@ -70,7 +75,6 @@ public class Login extends NameAwareFragment{
                     MainActivity.userID = login.getUserId();
                     MainActivity.token = "Bearer " +login.getToken();
 
-                    Log.e(LOG_TAG,"TOKEN : " + login.getToken());
                     //go to Landing Page
                     Class Landing_Page = LandingPage.class;
                     MainActivity.main. placeFragment(Landing_Page, R.id.mainFrame);
@@ -81,30 +85,14 @@ public class Login extends NameAwareFragment{
                     Log.e(LOG_TAG, t.getMessage());
                 }
             });
-
-            /*Call<ItemUser> call = jsonPlaceHolderApi.getUser(MainActivity.username);
-            call.enqueue(new Callback<ItemUser>() {
-                @Override
-                public void onResponse(Call<ItemUser> call, Response<ItemUser> response) {
-                    //Check if user exists
-                    if(!response.isSuccessful()) {
-                        Toast toast = Toast.makeText(v.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
-                        toast.show();
-                        return;
-                    }
-                    //get user ID and save it
-                    ItemUser user = response.body();
-                    MainActivity.userID = user.getUserId();
-                    //go to Landing Page
-                    Class Landing_Page = LandingPage.class;
-                    MainActivity.main. placeFragment(Landing_Page, R.id.mainFrame);
-                }
-
-                @Override
-                public void onFailure(Call<ItemUser> call, Throwable t) {
-                    Log.e(LOG_TAG, t.getMessage());
-                }
-            });*/
+        }
+    }
+    private class ButtonListenerSignUp implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            //go to Landing Page
+            Class Register = de.codingforce.wad.fragment.add.Register.class;
+            MainActivity.main. placeFragment(Register, R.id.mainFrame);
         }
     }
 }
