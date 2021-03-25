@@ -22,6 +22,7 @@ import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterShoppinglist;
+import de.codingforce.wad.fragment.add.AddShoppinglistDish;
 import de.codingforce.wad.fragment.add.AddShoppinglistIngredients;
 import de.codingforce.wad.item.ItemIngredient;
 import de.codingforce.wad.item.ItemIngredients;
@@ -42,6 +43,7 @@ public class Shoppinglist extends NameAwareFragment{
     private RecyclerView.LayoutManager mLayoutManager;
     private Button saveButton;
     private Button ingrButton;
+    private Button dishButton;
 
     ArrayList<ItemLayoutIngredients> ingredients = new ArrayList<>();
     ItemShoppinglists shoppinglists;
@@ -63,6 +65,9 @@ public class Shoppinglist extends NameAwareFragment{
 
         ingrButton = view.findViewById(R.id.shoppinglist_button_add_ingr);
         ingrButton.setOnClickListener(new Shoppinglist.ButtonListener_add_ingr());
+
+        dishButton = view.findViewById(R.id.shoppinglist_button_add_dish);
+        dishButton.setOnClickListener(new Shoppinglist.ButtonListener_add_dish());
 
         ingredients.clear();
 
@@ -194,6 +199,17 @@ public class Shoppinglist extends NameAwareFragment{
             //Shoppinglist
             Class AddShoppinglistIngredients = de.codingforce.wad.fragment.add.AddShoppinglistIngredients.class;
             MainActivity.main.placeFragment(AddShoppinglistIngredients, R.id.mainFrame);
+        }
+    }
+
+    private class ButtonListener_add_dish implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Log.e(LOG_TAG, "Button Clicked");
+
+            //Shoppinglist
+            Class AddShoppinglistDish = de.codingforce.wad.fragment.add.AddShoppinglistDish.class;
+            MainActivity.main.placeFragment(AddShoppinglistDish, R.id.mainFrame);
         }
     }
 }

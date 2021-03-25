@@ -8,37 +8,37 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="50dp">
 
         <Button
-            android:id="@+id/shoppinglist_save"
+            android:id="@+id/button_add_shoppinglist_dish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="speichern"
+            android:text="auswählen"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/shoppinglist_button_add_ingr"
-            android:layout_width="200dp"
+        <Spinner
+            android:id="@+id/spinner_add_shoopinglist_dish"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:text="Zutat hinzufügen"
-            app:layout_constraintEnd_toStartOf="@+id/shoppinglist_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/shoppinglist_button_add_dish"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Gericht hinzufügen"
-            app:layout_constraintEnd_toStartOf="@+id/shoppinglist_save"
-            app:layout_constraintTop_toBottomOf="@+id/shoppinglist_button_add_ingr" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/shoppinglist_RecyclerView"
+        android:id="@+id/recyler_add_dish"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
-        android:padding="4dp"/>
+        android:layout_height="550dp"
+        android:background="@android:color/darker_gray">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/button_add_dish_shoppinglist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hinzufügen" />
 </LinearLayout>

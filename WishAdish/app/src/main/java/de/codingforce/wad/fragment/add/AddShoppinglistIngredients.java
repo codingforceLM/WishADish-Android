@@ -43,7 +43,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddShoppinglistIngredients extends NameAwareFragment {
-    private static final String LOG_TAG = "Add Shoppinglist";
+    private static final String LOG_TAG = "Add Shoppinglist Ingr";
 
     private ArrayList<String> ingredients;
     private ArrayList<String> units;
