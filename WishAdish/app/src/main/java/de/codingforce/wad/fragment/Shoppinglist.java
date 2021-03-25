@@ -22,6 +22,7 @@ import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterShoppinglist;
+import de.codingforce.wad.fragment.add.AddShoppinglistIngredients;
 import de.codingforce.wad.item.ItemIngredient;
 import de.codingforce.wad.item.ItemIngredients;
 import de.codingforce.wad.item.ItemMessage;
@@ -40,6 +41,7 @@ public class Shoppinglist extends NameAwareFragment{
     private RecylerAdapterShoppinglist mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Button saveButton;
+    private Button ingrButton;
 
     ArrayList<ItemLayoutIngredients> ingredients = new ArrayList<>();
     ItemShoppinglists shoppinglists;
@@ -54,6 +56,13 @@ public class Shoppinglist extends NameAwareFragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Log.e(LOG_TAG, "--onViewCreated--");
         MainActivity.main.change_title(MainActivity.shoppinglistName);
+
+        //Buttons
+        saveButton = view.findViewById(R.id.shoppinglist_save);
+        saveButton.setOnClickListener(new Shoppinglist.ButtonListener());
+
+        ingrButton = view.findViewById(R.id.shoppinglist_button_add_ingr);
+        ingrButton.setOnClickListener(new Shoppinglist.ButtonListener_add_ingr());
 
         ingredients.clear();
 
@@ -88,9 +97,6 @@ public class Shoppinglist extends NameAwareFragment{
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setAdapter(mAdapter);
 
-                //Buttons
-                saveButton = view.findViewById(R.id.shoppinglist_save);
-                saveButton.setOnClickListener(new Shoppinglist.ButtonListener());
             }
 
             @Override
@@ -151,7 +157,7 @@ public class Shoppinglist extends NameAwareFragment{
 
             JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-            Log.e(LOG_TAG,new Gson().toJson(shopping_Json).replace("\\","").replaceAll("\"\\[","[").replaceAll("\\]\"","]"));
+            //Log.e(LOG_TAG,new Gson().toJson(shopping_Json).replace("\\","").replaceAll("\"\\[","[").replaceAll("\\]\"","]"));
 
             Call<ItemMessage> call = jsonPlaceHolderApi.changeShoppinglist(MainActivity.token,new Gson().toJson(shopping_Json).replace("\\","").replaceAll("\"\\[","[").replaceAll("\\]\"","]"));
             call.enqueue(new Callback<ItemMessage>() {
@@ -177,6 +183,17 @@ public class Shoppinglist extends NameAwareFragment{
                     Log.e(LOG_TAG, t.getMessage());
                 }
             });
+        }
+    }
+
+    private class ButtonListener_add_ingr implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Log.e(LOG_TAG, "Button Clicked");
+
+            //Shoppinglist
+            Class AddShoppinglistIngredients = de.codingforce.wad.fragment.add.AddShoppinglistIngredients.class;
+            MainActivity.main.placeFragment(AddShoppinglistIngredients, R.id.mainFrame);
         }
     }
 }
