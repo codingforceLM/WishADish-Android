@@ -12,12 +12,19 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 
 import de.codeingforce.wad.R;
 import de.codingforce.wad.activity.MainActivity;
 import de.codingforce.wad.api.JsonPlaceHolderApi;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterShoppinglist;
+import de.codingforce.wad.item.ItemIngredient;
+import de.codingforce.wad.item.ItemIngredients;
+import de.codingforce.wad.item.ItemMessage;
 import de.codingforce.wad.item.layouts.ItemLayoutIngredients;
 import de.codingforce.wad.item.ItemShoppinglists;
 import de.codingforce.wad.item.ItemShoppinglistsIngredients;
@@ -35,7 +42,7 @@ public class Shoppinglist extends NameAwareFragment{
     private Button saveButton;
 
     ArrayList<ItemLayoutIngredients> ingredients = new ArrayList<>();
-    ArrayList<ItemLayoutIngredients> ingredientsChecked = new ArrayList<>();
+    ItemShoppinglists shoppinglists;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -50,8 +57,6 @@ public class Shoppinglist extends NameAwareFragment{
 
         ingredients.clear();
 
-
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MainActivity.URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -64,12 +69,7 @@ public class Shoppinglist extends NameAwareFragment{
             @Override
             public void onResponse(Call<ItemShoppinglists> call, Response<ItemShoppinglists> response) {
 
-                if(!response.isSuccessful()) {
-                    Toast toast = Toast.makeText(view.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
-                    toast.show();
-                    return;
-                }
-                ItemShoppinglists shoppinglists = response.body();
+                shoppinglists = response.body();
 
                 for(ItemShoppinglistsIngredients ingredient : shoppinglists.getIngredients()){
                     boolean done = false;
@@ -102,26 +102,81 @@ public class Shoppinglist extends NameAwareFragment{
     private class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            ingredientsChecked.clear();
             Log.e(LOG_TAG,"Button Clicked");
+            //get infos about all Checkboxes and changes done value of Ingredients
             ArrayList<Boolean> booleanlist = mAdapter.isCheckedList();
-            for(int i = 0;i < ingredients.size();i++){
+            for(int i = 0;i < shoppinglists.getIngredients().size();i++){
                 try {
-                    if (booleanlist.get(i) != ingredients.get(i).isDone()) {
-                        ingredientsChecked.add(ingredients.get(i));
+                    Boolean bool = false;
+                    if(shoppinglists.getIngredients().get(i).getDone().equals("true")){
+                        bool = true;
+                    }
+                    if (booleanlist.get(i) != bool) {
+                        shoppinglists.getIngredients().get(i).setDone(booleanlist.get(i).toString());
                     }
                 }
                 catch (IndexOutOfBoundsException iobe){
                 }
             }
 
-            for(ItemLayoutIngredients ingr : ingredientsChecked){
-                Log.e(LOG_TAG,"Name :" + ingr.getmText1());
-            }
+            //create json for API call
+            JsonArray ingrArray = new JsonArray();
+            for(ItemShoppinglistsIngredients i : shoppinglists.getIngredients())
+            {
+                JsonObject ingr_Json = new JsonObject();
+                Boolean bool = false;
+                if(i.getDone().equals("true")) {
+                    bool = true;
+                }
 
-            //Shoppinglist
-            Class Shoppinglists = Shoppinglists.class;
-            MainActivity.main.placeFragment(Shoppinglists, R.id.mainFrame);
+                ingr_Json.addProperty("id",i.getId());
+                ingr_Json.addProperty("amount",Integer.parseInt(i.getAmount()));
+                ingr_Json.addProperty("unit",i.getUnit());
+                ingr_Json.addProperty("done",bool);
+
+
+                ingrArray.add(ingr_Json);
+            }
+            JsonObject shopping_Json = new JsonObject();
+            shopping_Json.addProperty("id",shoppinglists.getId());
+            shopping_Json.addProperty("ingredients",new Gson().toJson(ingrArray));
+
+
+
+            //create put call
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(MainActivity.URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+            Log.e(LOG_TAG,new Gson().toJson(shopping_Json).replace("\\","").replaceAll("\"\\[","[").replaceAll("\\]\"","]"));
+
+            Call<ItemMessage> call = jsonPlaceHolderApi.changeShoppinglist(MainActivity.token,new Gson().toJson(shopping_Json).replace("\\","").replaceAll("\"\\[","[").replaceAll("\\]\"","]"));
+            call.enqueue(new Callback<ItemMessage>() {
+                @Override
+                public void onResponse(Call<ItemMessage> call, Response<ItemMessage> response) {
+                    if (!response.isSuccessful()) {
+                        Toast toast = Toast.makeText(v.getContext(), "Code " + response.code() + " : " +response.message(), Toast.LENGTH_SHORT);
+                        toast.show();
+                        return;
+                    }
+
+                    for(ItemShoppinglistsIngredients ingr : shoppinglists.getIngredients()) {
+                        Log.e(LOG_TAG, "Name :" + ingr.getName() + "   DONE :" + ingr.getDone());
+                    }
+
+                    //Shoppinglist
+                    Class Shoppinglists = Shoppinglists.class;
+                    MainActivity.main.placeFragment(Shoppinglists, R.id.mainFrame);
+                }
+
+                @Override
+                public void onFailure(Call<ItemMessage> call, Throwable t) {
+                    Log.e(LOG_TAG, t.getMessage());
+                }
+            });
         }
     }
 }

@@ -156,6 +156,7 @@ public class CreateDish extends NameAwareFragment {
 
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
+
                 Call<ItemMessage> call = jsonPlaceHolderApi.createDish(MainActivity.token,MainActivity.userID,dish_name.getText().toString(),new Gson().toJson(ingrArray));
                 call.enqueue(new Callback<ItemMessage>() {
                     @Override

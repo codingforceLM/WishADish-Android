@@ -22,4 +22,16 @@ public class ItemLayoutIngredients {
     public boolean isDone() {
         return done;
     }
+
+    public void setmText1(String mText1) {
+        this.mText1 = mText1;
+    }
+
+    public void setmText2(String mText2) {
+        this.mText2 = mText2;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
 }

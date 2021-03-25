@@ -6,6 +6,7 @@ import de.codingforce.wad.item.ItemDish;
 import de.codingforce.wad.item.ItemDishIngredients;
 import de.codingforce.wad.item.ItemGroups;
 import de.codingforce.wad.item.ItemIngredient;
+import de.codingforce.wad.item.ItemInvite;
 import de.codingforce.wad.item.ItemLogin;
 import de.codingforce.wad.item.ItemMessage;
 import de.codingforce.wad.item.ItemShoppinglists;
@@ -15,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface JsonPlaceHolderApi {
@@ -28,6 +30,8 @@ public interface JsonPlaceHolderApi {
     @POST("list")
     Call<ItemMessage> createShoppinglist(@Header("Authorization")String token,@Header("name")String name, @Header("groupId") String groupID, @Header("userId") String userID);
 
+    @PUT("list")
+    Call<ItemMessage> changeShoppinglist(@Header("Authorization")String token,@Header("shoppinglist")String shoppinglist);
 
     //User
     @GET("user/{id}")
@@ -81,4 +85,10 @@ public interface JsonPlaceHolderApi {
     //login
     @POST("login")
     Call<ItemLogin> createLogin(@Header("email")String email, @Header("password")String password);
+
+
+
+    //invite
+    @GET("invite")
+    Call<ItemInvite> getInvite(@Header("Authorization")String token,@Header("groupID") String groupID);
 }

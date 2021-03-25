@@ -23,4 +23,5 @@ public class ItemShoppinglists {
     public List<ItemShoppinglistsIngredients> getIngredients() {
         return ingredients;
     }
+
 }

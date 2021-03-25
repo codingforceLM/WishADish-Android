@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +22,7 @@ import de.codingforce.wad.fragment.adapter.RecylerAdapterOnClick;
 import de.codingforce.wad.fragment.adapter.RecylerAdapterShoppinglist;
 import de.codingforce.wad.item.ItemGroup;
 import de.codingforce.wad.item.ItemGroups;
+import de.codingforce.wad.item.ItemInvite;
 import de.codingforce.wad.item.ItemShoppinglists;
 import de.codingforce.wad.item.layouts.ItemLayout;
 import retrofit2.Call;
@@ -34,6 +37,8 @@ public class Group extends NameAwareFragment{
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Button invite_Button;
+    private TextView invite_text;
 
     ArrayList<ItemLayout> list = new ArrayList<>();
 
@@ -48,6 +53,11 @@ public class Group extends NameAwareFragment{
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
         MainActivity.main.change_title(MainActivity.groupName);
+
+        invite_Button = view.findViewById(R.id.invite_button);
+        invite_Button.setOnClickListener(new Group.ButtonListener());
+
+        invite_text = view.findViewById(R.id.textView_link);
 
         list.clear();
 
@@ -87,5 +97,39 @@ public class Group extends NameAwareFragment{
                 Log.e(LOG_TAG, t.getMessage());
             }
         });
+    }
+
+    private class ButtonListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(MainActivity.URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+            Call<ItemInvite> call = jsonPlaceHolderApi.getInvite(MainActivity.token,MainActivity.groupID);
+            call.enqueue(new Callback<ItemInvite>() {
+                @Override
+                public void onResponse(Call<ItemInvite> call, Response<ItemInvite> response) {
+                    if(!response.isSuccessful()) {
+                        Toast toast = Toast.makeText(v.getContext(), "Code "+ response.code(), Toast.LENGTH_SHORT);
+                        toast.show();
+                        return;
+                    }
+
+                    ItemInvite invite = response.body();
+                    String link = "http://localhost:/#/invite/" + invite.getId();
+                    invite_text.setText(link);
+
+                }
+
+                @Override
+                public void onFailure(Call<ItemInvite> call, Throwable t) {
+                    Log.e(LOG_TAG, t.getMessage());
+                }
+            });
+        }
     }
 }

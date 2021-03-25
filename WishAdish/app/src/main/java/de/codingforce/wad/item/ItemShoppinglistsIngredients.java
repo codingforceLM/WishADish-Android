@@ -7,6 +7,26 @@ public class ItemShoppinglistsIngredients {
     String unit;
     String done;
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public void setDone(String done) {
+        this.done = done;
+    }
+
     public String getAmount() {
         return amount;
     }
