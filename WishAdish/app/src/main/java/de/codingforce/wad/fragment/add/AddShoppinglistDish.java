@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class AddShoppinglistDish extends NameAwareFragment {
     private RecyclerView mRecyclerView;
     private RecylerAdapterShoppinglist mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private EditText personcount;
 
     private List<ItemDish> dishes;
     private ItemDish dish;
@@ -65,6 +67,7 @@ public class AddShoppinglistDish extends NameAwareFragment {
         super.onViewCreated(view, savedInstanceState);
         Log.e(LOG_TAG, "--onViewCreated--");
         MainActivity.main.change_title("Gericht hinzufügen");
+        personcount = view.findViewById(R.id.add_shoppinglist_dish_person);
         mainview = view;
         if(dish != null){
             dish.getIngredients().clear();
@@ -151,6 +154,9 @@ public class AddShoppinglistDish extends NameAwareFragment {
                     }
                     ArrayList<ItemLayoutIngredients> ingredients = new ArrayList<>();
                     dish = response.body();
+                    for(int i = 0; i< dish.getIngredients().size();i++){
+                        dish.getIngredients().get(i).setAmount(Integer.toString(Integer.parseInt(dish.getIngredients().get(i).getAmount()) * Integer.parseInt(personcount.getText().toString())));
+                    }
                     for(ItemShoppinglistsIngredients ingr : dish.getIngredients()){
                         ingredients.add(new ItemLayoutIngredients(ingr.getName(),ingr.getAmount() + " " + ingr.getUnit(),false));
                     }
