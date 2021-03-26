@@ -24,6 +24,9 @@ public interface JsonPlaceHolderApi {
     @GET("list")
     Call<List<ItemShoppinglists>> getShoppinglists(@Header("Authorization")String token,@Header("userID") String userID);
 
+    @GET("list")
+    Call<List<ItemShoppinglists>> getShoppinglists(@Header("Authorization")String token,@Header("userID") String userID,@Header("done") String done);
+
     @GET("list/{listID}")
     Call<ItemShoppinglists> getShoppinglist(@Header("Authorization")String token,@Path("listID") String listID);
 

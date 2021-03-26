@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(!currentFragment.equals(Login) && !currentFragment.equals(Register)){
-            // This will display an Up icon (<-)
+            /*// This will display an Up icon (<-)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
            // Find our drawer view
@@ -291,6 +291,13 @@ public class MainActivity extends AppCompatActivity {
             // Find our drawer view
             nvDrawer = (NavigationView) findViewById(R.id.nvView);
             // Setup drawer view
+            setupDrawerContent(nvDrawer);*/
+            mDrawer = findViewById(R.id.drawer_layout);
+
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(main,mDrawer,toolbar,R.string.drawer_open,R.string.drawer_close);
+            mDrawer.addDrawerListener(toggle);
+            toggle.syncState();
+            nvDrawer = (NavigationView) findViewById(R.id.nvView);
             setupDrawerContent(nvDrawer);
         }
         else{

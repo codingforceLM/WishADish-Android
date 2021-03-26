@@ -57,7 +57,7 @@ public class OpenShoppinglists extends NameAwareFragment {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<ItemShoppinglists>> call = jsonPlaceHolderApi.getShoppinglists(MainActivity.token,MainActivity.userID);
+        Call<List<ItemShoppinglists>> call = jsonPlaceHolderApi.getShoppinglists(MainActivity.token,MainActivity.userID, "true");
 
         call.enqueue(new Callback<List<ItemShoppinglists>>() {
             @Override
