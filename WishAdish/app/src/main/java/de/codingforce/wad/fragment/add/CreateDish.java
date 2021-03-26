@@ -111,8 +111,11 @@ public class CreateDish extends NameAwareFragment {
 
         units = new ArrayList<>();
         units.add("Einheit auswählen");
+        units.add("g");
         units.add("kg");
+        units.add("ml");
         units.add("l");
+        units.add("stk");
 
         //Action Button
         more_ing = view.findViewById(R.id.more_ingredients);

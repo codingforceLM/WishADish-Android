@@ -120,7 +120,7 @@ public class Group extends NameAwareFragment{
                     }
 
                     ItemInvite invite = response.body();
-                    String link = "http://localhost:/#/invite/" + invite.getId();
+                    String link = "http://localhost:8080/#/invite/" + invite.getId();
                     invite_text.setText(link);
 
                 }

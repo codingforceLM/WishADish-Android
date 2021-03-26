@@ -108,8 +108,11 @@ public class AddShoppinglistIngredients extends NameAwareFragment {
 
         units = new ArrayList<>();
         units.add("Einheit auswählen");
+        units.add("g");
         units.add("kg");
+        units.add("ml");
         units.add("l");
+        units.add("stk");
 
 
         //Action Button
