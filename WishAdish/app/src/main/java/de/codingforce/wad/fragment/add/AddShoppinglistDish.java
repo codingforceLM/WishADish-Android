@@ -155,7 +155,22 @@ public class AddShoppinglistDish extends NameAwareFragment {
                     ArrayList<ItemLayoutIngredients> ingredients = new ArrayList<>();
                     dish = response.body();
                     for(int i = 0; i< dish.getIngredients().size();i++){
-                        dish.getIngredients().get(i).setAmount(Integer.toString(Integer.parseInt(dish.getIngredients().get(i).getAmount()) * Integer.parseInt(personcount.getText().toString())));
+                        dish.getIngredients().get(i).setAmount(Double.toString(Double.parseDouble(dish.getIngredients().get(i).getAmount()) * Double.parseDouble(personcount.getText().toString())));
+                        if(Double.parseDouble(dish.getIngredients().get(i).getAmount()) >= 1000)
+                        {
+                            switch(dish.getIngredients().get(i).getUnit()){
+                                case "g":
+                                    dish.getIngredients().get(i).setUnit("kg");
+                                    dish.getIngredients().get(i).setAmount(Double.toString(Double.parseDouble(dish.getIngredients().get(i).getAmount()) / 1000));
+                                    break;
+                                case "ml":
+                                    dish.getIngredients().get(i).setUnit("l");
+                                    dish.getIngredients().get(i).setAmount(Double.toString(Double.parseDouble(dish.getIngredients().get(i).getAmount()) / 1000));
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
                     for(ItemShoppinglistsIngredients ingr : dish.getIngredients()){
                         ingredients.add(new ItemLayoutIngredients(ingr.getName(),ingr.getAmount() + " " + ingr.getUnit(),false));
@@ -193,7 +208,7 @@ public class AddShoppinglistDish extends NameAwareFragment {
                 if(bool_list.size()>i) {
                     if(!bool_list.get(i)) {
                         ingr_Json.addProperty("id", dish.getIngredients().get(i).getId());
-                        ingr_Json.addProperty("amount", Integer.parseInt(dish.getIngredients().get(i).getAmount()));
+                        ingr_Json.addProperty("amount", Double.parseDouble(dish.getIngredients().get(i).getAmount()));
                         ingr_Json.addProperty("unit", dish.getIngredients().get(i).getUnit());
                         ingr_Json.addProperty("done", false);
 
@@ -201,7 +216,7 @@ public class AddShoppinglistDish extends NameAwareFragment {
                     }
                 }else {
                     ingr_Json.addProperty("id", dish.getIngredients().get(i).getId());
-                    ingr_Json.addProperty("amount", Integer.parseInt(dish.getIngredients().get(i).getAmount()));
+                    ingr_Json.addProperty("amount", Double.parseDouble(dish.getIngredients().get(i).getAmount()));
                     ingr_Json.addProperty("unit", dish.getIngredients().get(i).getUnit());
                     ingr_Json.addProperty("done", false);
 

@@ -160,7 +160,7 @@ public class AddShoppinglistIngredients extends NameAwareFragment {
                         }
                     }
                     ingr_Json.addProperty("id",ingrID);
-                    ingr_Json.addProperty("amount",Integer.parseInt(i.getAmount()));
+                    ingr_Json.addProperty("amount",Double.parseDouble(i.getAmount()));
                     ingr_Json.addProperty("unit",i.getUnit());
                     ingr_Json.addProperty("done",false);
 
@@ -177,7 +177,7 @@ public class AddShoppinglistIngredients extends NameAwareFragment {
                     }
 
                     ingr_Json.addProperty("id",i.getId());
-                    ingr_Json.addProperty("amount",Integer.parseInt(i.getAmount()));
+                    ingr_Json.addProperty("amount",Double.parseDouble(i.getAmount()));
                     ingr_Json.addProperty("unit",i.getUnit());
                     ingr_Json.addProperty("done",bool);
 

@@ -43,8 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="loki@asgard.com" />
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/textView18"
