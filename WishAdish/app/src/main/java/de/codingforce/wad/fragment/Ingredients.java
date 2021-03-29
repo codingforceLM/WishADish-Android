@@ -76,14 +76,31 @@ public class Ingredients extends NameAwareFragment{
                     list.add(new ItemLayout(ing.getName(),ing.getId()));
                 }
 
-                //Set up Recyler View
-                mRecyclerView = view.findViewById(R.id.RecylerView_Ingredients);
-                mRecyclerView.setHasFixedSize(true);
-                mLayoutManager = new LinearLayoutManager(view.getContext());
-                mAdapter = new RecylerAdapter(list);
+                Call<List<ItemIngredient>> call2 = jsonPlaceHolderApi.getIngredients(MainActivity.token,MainActivity.systemID);
+                call2.enqueue(new Callback<List<ItemIngredient>>() {
+                    @Override
+                    public void onResponse(Call<List<ItemIngredient>> call, Response<List<ItemIngredient>> response) {
+                        List<ItemIngredient> ingredientsys = response.body();
+                        for(ItemIngredient ing : ingredientsys){
+                            list.add(new ItemLayout(ing.getName(),ing.getId()));
+                        }
 
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setAdapter(mAdapter);
+                        //Set up Recyler View
+                        mRecyclerView = view.findViewById(R.id.RecylerView_Ingredients);
+                        mRecyclerView.setHasFixedSize(true);
+                        mLayoutManager = new LinearLayoutManager(view.getContext());
+                        mAdapter = new RecylerAdapter(list);
+
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        mRecyclerView.setAdapter(mAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<ItemIngredient>> call, Throwable t) {
+
+                    }
+                });
+
             }
 
             @Override

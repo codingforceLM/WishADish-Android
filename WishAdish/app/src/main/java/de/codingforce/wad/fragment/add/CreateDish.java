@@ -98,9 +98,25 @@ public class CreateDish extends NameAwareFragment {
                     return;
                 }
                 ingr_list = response.body();
-                for(ItemIngredient ingr : ingr_list){
-                    ingredients.add(ingr.getName());
-                }
+
+                Call<List<ItemIngredient>> call2 = jsonPlaceHolderApi.getIngredients(MainActivity.token,MainActivity.systemID);
+                call2.enqueue(new Callback<List<ItemIngredient>>() {
+                    @Override
+                    public void onResponse(Call<List<ItemIngredient>> call, Response<List<ItemIngredient>> response) {
+                        List<ItemIngredient> ingrsys = response.body();
+                        for(ItemIngredient ingr : ingrsys){
+                            ingr_list.add(ingr);
+                        }
+                        for(ItemIngredient ingr : ingr_list){
+                            ingredients.add(ingr.getName());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<ItemIngredient>> call, Throwable t) {
+
+                    }
+                });
             }
 
             @Override

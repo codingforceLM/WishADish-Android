@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public static String username;
     public static final String URL = "http://10.0.2.2:3000/api/";
     public static String userID;
+    public static String systemID = "dbaaa759-149b-4fa4-8451-b87a18837b2a";
     public static String shoppinglistID;
     public static String shoppinglistName;
     public static Date tag;
