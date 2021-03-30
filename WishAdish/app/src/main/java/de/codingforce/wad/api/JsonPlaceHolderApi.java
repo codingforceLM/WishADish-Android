@@ -51,7 +51,7 @@ public interface JsonPlaceHolderApi {
     Call<List<ItemWish>> getWish(@Header("Authorization")String token,@Header("userID")String userID, @Header("month") String month, @Header("day") String day,@Header("year")String year);
 
     @POST("wish")
-    Call<ItemMessage> createWish(@Header("Authorization")String token,@Header("userId")String userID,@Header("groupId")String groupID,@Header("dishId")String dishID,@Header("daytime")String daytime,@Header("date")String date);
+    Call<ItemMessage> createWish(@Header("Authorization")String token,@Header("userId")String userID,@Header("groupId")String groupID,@Header("dishId")String dishID,@Header("daytime")String daytime,@Header("wishDate")String date);
 
 
     //dishes
